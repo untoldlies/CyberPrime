@@ -60,10 +60,10 @@
 		 <h3>Registration:</h3>
 		 <p>You are registering with your IP address: 127.0.0.1</p>
 		 <p>Wrong IP address? Please type in your correct IP Address here:<br/>
-				<input type="text" name="ip_oct_1" class="calc-input" maxlength="3" onChange="valueChange('0');"> .
-				<input type="text" name="ip_oct_2" class="calc-input" maxlength="3" onChange="valueChange('0');"> .
-				<input type="text" name="ip_oct_3" class="calc-input" maxlength="3" onChange="valueChange('0');"> .
-				<input type="text" name="ip_oct_4" class="calc-input" maxlength="3" onChange="valueChange('0');">
+				<input type="text" size="3" name="ip_oct_1" class="calc-input" maxlength="3" onChange="valueChange('0');"> .
+				<input type="text" size="3" name="ip_oct_2" class="calc-input" maxlength="3" onChange="valueChange('0');"> .
+				<input type="text" size="3" name="ip_oct_3" class="calc-input" maxlength="3" onChange="valueChange('0');"> .
+				<input type="text" size="3" name="ip_oct_4" class="calc-input" maxlength="3" onChange="valueChange('0');">
 				<!--CSS to style it so it becomes 3 characters wide, JS to make sure all are numbers-->
          </p>
 		 <!--Auto detect IP address-->

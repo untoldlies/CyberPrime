@@ -3,6 +3,7 @@
     <wb-module deploy-name="CyberPrime2">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/srcfolder"/>
         <property name="context-root" value="CyberPrime2"/>
         <property name="java-output-path" value="/CyberPrime2/build/classes"/>
     </wb-module>
