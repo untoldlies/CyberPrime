@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -14,7 +14,7 @@
 <ul id="menu">
 <li><a class="tooltip"href="#"><img src="images/ispjiconchat.png" alt="Chat" ><span></br>Chat</span></a></li>
 <li><a class="tooltip"href="#"><img src="images/ispjiconvidstream.png" alt="Video" ><span></br>Video Streaming</span></a></li>
-<li><a class="tooltip"href="#"><img src="images/ispjiconfiletrans.png" alt="File Transfer" ><span></br>File Transfer</span></a></li>
+<li><a class="tooltip"href="#"><img src="images/ispjiconfiletransfer.png" alt="File Transfer" ><span></br>File Transfer</span></a></li>
 <li><a class="tooltip"href="#"><img src="images/ispjiconvidconf.png" alt="Conference" ><span></br>Video Conference</span></a></li>
 </ul> 
 </div>
