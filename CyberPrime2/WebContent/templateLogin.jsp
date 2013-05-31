@@ -56,7 +56,7 @@
         </div>
       </div>
       <div class="content">
-         <form method="post" action="Home.jsp">
+         <form method="post" action="secured/Home.jsp">
 		 <h3>Login:</h3>
 		 <p>You are logging in with your IP address: 127.0.0.1</p>
 		 <p>Wrong IP address? Please type in your correct IP Address here:<br/>
