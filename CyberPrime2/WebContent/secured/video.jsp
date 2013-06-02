@@ -7,13 +7,19 @@
 <title>Video Streaming</title>
 <style type="text/css">
 body{
-width:800px;
-height:6000px;
+width:775px;
+height:580px;
 background-color:white;
 }
 </style>
 </head>
 <body>
 
-</body>
+<form method="post" action="#">
+		<input type="submit" value="back">
+		<input type="text" name="url" placeholder="Enter url of the page">
+		<input type="submit" value="go">
+	</form>
+	<iframe width="700" height="500" src=""></iframe>
+	</body>
 </html>

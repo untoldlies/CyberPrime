@@ -17,9 +17,9 @@ function changePage(source){
 <div id="menubar">
 <a href="../template.jsp"><img src="../images/cplogo.png" alt="Cyber Prime"/ width="200" height="200"></a>
 <ul id="menu">
-<li><a class="tooltip"href="#"><img src="../images/ispjiconchat.png" alt="Chat" ><span></br>Chat</span></a></li>
+<li><a class="tooltip"href="#"onclick="changePage('chat.jsp')"><img src="../images/ispjiconchat.png" alt="Chat" ><span></br>Chat</span></a></li>
 <li><a class="tooltip"href="#"onclick="changePage('video.jsp')"><img src="../images/ispjiconvidstream.png" alt="Video" ><span></br>Video Streaming</span></a></li>
-<li><a class="tooltip"href="#"><img src="../images/ispjiconfiletransfer.png" alt="File Transfer" ><span></br>File Transfer</span></a></li>
+<li><a class="tooltip"href="#"onclick="changePage('fileTransfer.jsp')"><img src="../images/ispjiconfiletransfer.png" alt="File Transfer" ><span></br>File Transfer</span></a></li>
 <li><a class="tooltip"href="#"onclick="changePage('conference.jsp')"><img src="../images/ispjiconvidconf.png" alt="Conference" ><span></br>Video Conference</span></a></li>
 </ul> 
 </div>
@@ -29,7 +29,7 @@ function changePage(source){
 
 
 <div id="rightMenu">
-<a href="template.jsp" title="Logout"><img id="logout" src="../images/cpicon.png" alt="logout" width="40" height="40"/></a>
+<a href="../template.jsp" title="Logout"><img id="logout" src="../images/cpicon.png" alt="logout" width="40" height="40"/></a>
 <div id ="accInfo">
 <p>ID:</p>
 <div class="checkbox">
@@ -39,6 +39,9 @@ function changePage(source){
   	</div>
 
 
+</div>
+<div id="notifications">
+Notifications here
 </div>
 </div>
 
