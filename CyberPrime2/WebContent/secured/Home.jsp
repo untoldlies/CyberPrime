@@ -20,7 +20,7 @@ function changePage(source){
 <li><a class="tooltip"href="#"><img src="../images/ispjiconchat.png" alt="Chat" ><span></br>Chat</span></a></li>
 <li><a class="tooltip"href="#"onclick="changePage('video.jsp')"><img src="../images/ispjiconvidstream.png" alt="Video" ><span></br>Video Streaming</span></a></li>
 <li><a class="tooltip"href="#"><img src="../images/ispjiconfiletransfer.png" alt="File Transfer" ><span></br>File Transfer</span></a></li>
-<li><a class="tooltip"href="#"><img src="../images/ispjiconvidconf.png" alt="Conference" ><span></br>Video Conference</span></a></li>
+<li><a class="tooltip"href="#"onclick="changePage('conference.jsp')"><img src="../images/ispjiconvidconf.png" alt="Conference" ><span></br>Video Conference</span></a></li>
 </ul> 
 </div>
 <div id="content">
