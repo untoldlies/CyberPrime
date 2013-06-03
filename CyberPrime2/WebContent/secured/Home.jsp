@@ -24,7 +24,7 @@ function changePage(source){
 </ul> 
 </div>
 <div id="content">
-<iframe scrollable=false id="iframe"src="" width="800" height="600" frameborder="0"></iframe>
+<iframe scrolling="no" id="iframe"src="" width="800" height="600" frameborder="0"></iframe>
 </div>
 
 
