@@ -6,10 +6,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <style type="text/css">
-div.main{
+body  {
 		 width:775px;
-	 	height:580px;
-	 	background-color:orange;
+	 	height:570px;
+	 	background-color:grey;
 		}
 </style>
 <title>File Upload</title>
@@ -24,7 +24,7 @@ div.main{
 				<input type="file" name="file" size="100" /> <br /> 
 				<strong>Now please type in the person's ID that you want to transfer your file to:</strong>
 				<input type="text" name="Id" class="calc-input" maxlength="15" onChange="valueChange('0');">
-				<input type="submit" value="Upload File" />
+				</br><input type="submit" value="Upload File" />
 			</form>
 			
 				

@@ -7,11 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <style type="text/css">
 
-div.main {
+body {
 	 width:775px;
 	 height:580px;
-	 background-color:red;
-}
+	 background-color:grey;
+	 color:white;
+	}
 </style>
 <title>File Transferred</title>
 </head>
