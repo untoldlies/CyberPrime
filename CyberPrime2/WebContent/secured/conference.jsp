@@ -12,16 +12,18 @@ width:775px;
 #otherUsers
 {
 border:2px solid;
-height:100px;
+height:400px;
+}
+#yourself {
+border:2px solid;
+height:150px;
+width:400px;
 }
 .navi {
 	
 	display:inline-block;
 	background-color:white;
 	border-radius:15px;
-	position:relative;
-	top:100px;
-	/*margin:auto;*/
 	font-family:"Lucida Calligraphy" Verdana;
 }
 }
@@ -37,12 +39,11 @@ height:100px;
 	text-decoration:none;
 	padding: 5px;
 	color:black;
-/* 	font-size:1.5em; */
 }
 ul {
 position:relative;
-left:250px;
-top: 300px;
+left:400px;
+bottom:100px;
 }
 </style>
 </head>
