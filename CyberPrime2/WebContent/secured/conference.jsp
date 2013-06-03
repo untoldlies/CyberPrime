@@ -38,6 +38,10 @@ height:100px;
 	color:black;
 /* 	font-size:1.5em; */
 }
+ul {
+margin-left:auto;
+margin-right:auto;
+}
 </style>
 </head>
 <body>
@@ -51,9 +55,9 @@ your video here
 					<li class="navi"><a class=naviwords href="">End Call</a>
 	
 					</li>
-					<li class="navi"><a href=""></a>
+					<li class="navi">
 						<form method="post" action="#">
-						<input type="text" name="url" value="Add user's ID here.">
+						<input type="text" name="url" placeholder="Add user's ID here.">
 						<input type="submit" class=naviwords value="Add">
 						</form>
 					</li>
