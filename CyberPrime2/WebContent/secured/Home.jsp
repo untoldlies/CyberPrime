@@ -6,11 +6,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Homepage</title>
   <link rel="stylesheet" type="text/css" href="../css/home.css" />
-  <script>
+<script>
 function changePage(source){
 	document.getElementById('iframe').src = source;
 }
-
 </script>
 </head>
 <body>
