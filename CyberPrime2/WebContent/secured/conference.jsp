@@ -20,7 +20,7 @@ height:100px;
 	border-radius:15px;
 	position:relative;
 	top:100px;
-	margin:auto;
+	/*margin:auto;*/
 	font-family:"Lucida Calligraphy" Verdana;
 }
 }
@@ -39,8 +39,9 @@ height:100px;
 /* 	font-size:1.5em; */
 }
 ul {
-margin-left:auto;
-margin-right:auto;
+position:relative;
+left:250px;
+top: 300px;
 }
 </style>
 </head>
