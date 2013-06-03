@@ -7,20 +7,23 @@
 <style type="text/css">
 body{
 background-color:gray;
+width:775px;
 }
 #otherUsers
 {
 border:2px solid;
-height:100px;
+height:400px;
+}
+#yourself {
+border:2px solid;
+height:150px;
+width:400px;
 }
 .navi {
 	
 	display:inline-block;
 	background-color:white;
 	border-radius:15px;
-	position:relative;
-	top:100px;
-	margin:auto;
 	font-family:"Lucida Calligraphy" Verdana;
 }
 }
@@ -36,7 +39,11 @@ height:100px;
 	text-decoration:none;
 	padding: 5px;
 	color:black;
-/* 	font-size:1.5em; */
+}
+ul {
+position:relative;
+left:400px;
+bottom:100px;
 }
 </style>
 </head>
@@ -51,9 +58,9 @@ your video here
 					<li class="navi"><a class=naviwords href="">End Call</a>
 	
 					</li>
-					<li class="navi"><a href=""></a>
+					<li class="navi">
 						<form method="post" action="#">
-						<input type="text" name="url" value="Add user's ID here.">
+						<input type="text" name="url" placeholder="Add user's ID here.">
 						<input type="submit" class=naviwords value="Add">
 						</form>
 					</li>

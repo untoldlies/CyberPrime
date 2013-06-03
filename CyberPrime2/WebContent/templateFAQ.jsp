@@ -17,7 +17,7 @@
       <div id="logo">
         <div id="logo_text">
           <!-- class="logo_colour", allows you to change the colour of the text -->
-          <h1><a href="index.html">cyber<span class="logo_colour">_Prime</span></a></h1>
+          <h1><a href="template.jsp">cyber<span class="logo_colour">_Prime</span></a></h1>
           <h2>Secure, anonymous collaboration.</h2>
         </div>
       </div>
@@ -28,14 +28,7 @@
             <li><a href="templateFAQ.jsp">FAQ</a></li>
             <li><a href="templateRegister.jsp">Register</a></li>
 			<li><a href="templateLogin.jsp">Login</a></li>
-            <li><a href="#">Services</a>
-              <ul>
-                <li><a href="#">Chat</a></li>
-                <li><a href="#">File Transfer</a></li>
-                <li><a href="#">Video Streaming</a></li>
-                <li><a href="#">Video Chat</a></li>
-              </ul>
-            </li>
+            <li><a href="templateFAQ.jsp#service">Services</a></li>
            <li><a href="templateAbout.jsp">About Us</a></li>
           </ul>
         </div>
@@ -71,10 +64,10 @@
 	  should manually enter them into the website. It is vital that this is correct, since your MAC address is crucial in
 	  determining the ID which will be assigned to you, as well as controlling which devices you access the services with.</p>
 	  </dl>
-    <h3>Usage of Services</h3>
+    <h3 id="service">Usage of Services</h3>
 	  <dl>
 	  <h4>What services do you offer?</h4>
-	  <p>Encrypted chat, file transfer and video streaming services. You may access them via <a href="">this link</a>.</p>
+	  <p>Encrypted chat, file transfer and video streaming services. You may access them via <a href="templateLogin.jsp">this link</a>.</p>
 	  <h4>Why do you require MAC address?</h4>
 	  <p>Your MAC address is crucial in determining the ID which will be assigned to you, as well as controlling which devices
 	  you access the services with. For security reasons, we may restrict usage of the service to only the device you register with,

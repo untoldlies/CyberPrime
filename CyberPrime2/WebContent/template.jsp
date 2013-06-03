@@ -17,7 +17,7 @@
       <div id="logo">
         <div id="logo_text">
           <!-- class="logo_colour", allows you to change the colour of the text -->
-          <h1><a href="index.html">cyber<span class="logo_colour">_Prime</span></a></h1>
+          <h1><a href="template.jsp">cyber<span class="logo_colour">_Prime</span></a></h1>
           <h2>Secure, anonymous collaboration.</h2>
         </div>
       </div>
@@ -28,14 +28,7 @@
             <li><a href="templateFAQ.jsp">FAQ</a></li>
             <li><a href="templateRegister.jsp">Register</a></li>
 			<li><a href="templateLogin.jsp">Login</a></li>
-            <li><a href="#">Services</a>
-              <ul>
-                <li><a href="#">Chat</a></li>
-                <li><a href="#">File Transfer</a></li>
-                <li><a href="#">Video Streaming</a></li>
-                <li><a href="#">Video Chat</a></li>
-              </ul>
-            </li>
+            <li><a href="templateFAQ.jsp#service">Services</a></li>
            <li><a href="templateAbout.jsp">About Us</a></li>
           </ul>
         </div>
@@ -56,11 +49,11 @@
         </div>
       </div>
       <div class="content">
-        <h1>Welcome to the scenic_photo template</h1>
-        <p>This simple, fixed width website template is released under a <a href="http://creativecommons.org/licenses/by/3.0">Creative Commons Attribution 3.0 Licence</a>. This means you are free to download and use it for personal and commercial projects. However, you <strong>must leave the 'design from css3templates.co.uk' link in the footer of the template</strong>.</p>
-        <p>This template is written entirely in <strong>HTML5</strong> and <strong>CSS3</strong>. The photo used in the design was taken by me.</p>
-        <p>You can view more free CSS3 web templates <a href="http://www.css3templates.co.uk">here</a>.</p>
-        <p>This template is a fully documented 5 page website, with an <a href="examples.html">examples</a> page that gives examples of all the styles available with this design. There is also a working PHP contact form on the contact page.</p>
+        <h1>Welcome to the Cyber Prime website</h1>
+        <p>If you are seeing this page, then you have access to our wwwroot directory.</p>
+        <p>This means that you have access to our computer or github repository.</p>
+        <p>Thank you for coming here but there is nothing for you.</p>
+        <p>Please use the links above to enter our real web pages.</p>
       </div>
     </div>
     <footer>

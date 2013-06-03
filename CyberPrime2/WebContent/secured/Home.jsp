@@ -11,10 +11,13 @@ function changePage(source){
 	document.getElementById('iframe').src = source;
 }
 </script>
+<style type="text/css">
+
+</style>
 </head>
 <body>
 <div id="menubar">
-<a href="../template.jsp"><img src="../images/cplogo.png" alt="Cyber Prime"/ width="200" height="200"></a>
+<a href="#"onclick="changePage('WelcomeInHome.jsp')"><img src="../images/cplogo.png" alt="Cyber Prime"/ width="200" height="200"></a>
 <ul id="menu">
 <li><a class="tooltip"href="#"onclick="changePage('chat.jsp')"><img src="../images/ispjiconchat.png" alt="Chat" ><span></br>Chat</span></a></li>
 <li><a class="tooltip"href="#"onclick="changePage('video.jsp')"><img src="../images/ispjiconvidstream.png" alt="Video" ><span></br>Video Streaming</span></a></li>
@@ -23,7 +26,8 @@ function changePage(source){
 </ul> 
 </div>
 <div id="content">
-<iframe id="iframe"src="" width="800" height="600" frameborder="0"></iframe>
+<iframe scrolling="no" id="iframe"src="WelcomeInHome.jsp" width="800" height="600" frameborder="0">
+</iframe>
 </div>
 
 
