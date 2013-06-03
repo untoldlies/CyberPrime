@@ -17,25 +17,18 @@
       <div id="logo">
         <div id="logo_text">
           <!-- class="logo_colour", allows you to change the colour of the text -->
-          <h1><a href="index.html">cyber<span class="logo_colour">_Prime</span></a></h1>
+          <h1><a href="template.jsp">cyber<span class="logo_colour">_Prime</span></a></h1>
           <h2>Secure, anonymous collaboration.</h2>
         </div>
       </div>
       <nav>
-        <div id="menu_container">
+       <div id="menu_container">
           <ul class="sf-menu" id="nav">
             <li><a href="template.jsp">Home</a></li>
             <li><a href="templateFAQ.jsp">FAQ</a></li>
             <li><a href="templateRegister.jsp">Register</a></li>
 			<li><a href="templateLogin.jsp">Login</a></li>
-            <li><a href="#">Services</a>
-              <ul>
-                <li><a href="#">Chat</a></li>
-                <li><a href="#">File Transfer</a></li>
-                <li><a href="#">Video Streaming</a></li>
-                <li><a href="#">Video Chat</a></li>
-              </ul>
-            </li>
+            <li><a href="templateFAQ.jsp#service">Services</a></li>
            <li><a href="templateAbout.jsp">About Us</a></li>
           </ul>
         </div>

@@ -22,6 +22,12 @@ body  {
 			<form action="fileTransferFinished.jsp" method="post"
 				enctype="multipart/form-data">
 				<input type="file" name="file" size="100" /> <br /> 
+				</br>
+				</br>
+				</br>
+				</br>
+				</br>
+				</br>
 				<strong>Now please type in the person's ID that you want to transfer your file to:</strong>
 				<input type="text" name="Id" class="calc-input" maxlength="15" onChange="valueChange('0');">
 				</br><input type="submit" value="Upload File" />

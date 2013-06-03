@@ -9,7 +9,7 @@
 
 body {
 	 width:775px;
-	 height:580px;
+	 height:570px;
 	 background-color:grey;
 	 color:white;
 	}
