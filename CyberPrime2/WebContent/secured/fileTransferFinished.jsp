@@ -10,7 +10,8 @@
 div.main {
 	 width:775px;
 	 height:580px;
-	 background-color:red;
+	 background-color:grey;
+	 color:white;
 }
 </style>
 <title>File Transferred</title>
