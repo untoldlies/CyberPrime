@@ -7,6 +7,7 @@
 <style type="text/css">
 body{
 background-color:gray;
+width:775px;
 }
 #otherUsers
 {
