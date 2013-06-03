@@ -27,15 +27,16 @@ height:100px;
 .naviwords:hover {
 	color:white;
 }
-.navi {
-	-webkit-transform:rotate(20deg) scaleY(1.5);
-	
-	}
+.navi:hover{
+	background-color:rgba(0,0,255,0.6);
+	border-radius:15px;
+	box-shadow:2px 2px 5px #3366CC;
+}
 .naviwords{
 	text-decoration:none;
-	padding: 10px;
+	padding: 5px;
 	color:black;
-	font-size:1.5em;
+/* 	font-size:1.5em; */
 }
 </style>
 </head>
@@ -50,10 +51,10 @@ your video here
 					<li class="navi"><a class=naviwords href="">End Call</a>
 	
 					</li>
-					<li class="navi"><a class=naviwords href=""></a>
+					<li class="navi"><a href=""></a>
 						<form method="post" action="#">
 						<input type="text" name="url" value="Add user's ID here.">
-						<input type="submit" value="Add">
+						<input type="submit" class=naviwords value="Add">
 						</form>
 					</li>
 					
