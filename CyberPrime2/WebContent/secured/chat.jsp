@@ -20,7 +20,7 @@ Chat area.
 <div id="post">
 <form name="input" action="html_form_action.asp" method="get">
 <textarea rows="2" cols="100" style="resize:none">
-Enter your message here.
+Enter your message here. 
 </textarea>
 <input type="submit" value="Submit">
 </form>
