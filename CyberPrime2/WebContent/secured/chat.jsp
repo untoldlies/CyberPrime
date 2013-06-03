@@ -6,6 +6,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Chat</title>
 </head>
+<style>
+textarea
+{
+    border:1px solid #999999;
+    width:98%;
+    margin:5px 0;
+    padding:1%;
+}
+</style>
 <body>
 <div id="top">
 Chat<br/><br/>
