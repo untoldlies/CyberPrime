@@ -7,6 +7,24 @@
 <title>Chat</title>
 </head>
 <body>
-Chat
+<div id="top">
+Chat<br/><br/>
+You are logged in as:<br/><br/><br/>
+
+</div>
+<div id="chat">
+<textarea rows="50" cols="100" disabled="disabled" style="resize:none">
+Chat area.
+</textarea>
+<br/><br/>
+<div id="post">
+<form name="input" action="html_form_action.asp" method="get">
+<textarea rows="2" cols="100" style="resize:none">
+Enter your message here.
+</textarea>
+<input type="submit" value="Submit">
+</form>
+</div>
+</div>
 </body>
 </html>
