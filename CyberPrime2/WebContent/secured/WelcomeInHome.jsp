@@ -4,13 +4,17 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<style type="text/css">
 #welcome {
-color:green;
+color:#26ca28;
 position:absolute;
 z-index:2
 text-align:center;
-font-size:100px;
+font-size:50px;
+position:relative;
+top:150px;
 }
+</style>
 </head>
 <body>
 <h1 id="welcome">
