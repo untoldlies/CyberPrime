@@ -56,11 +56,11 @@
         </div>
       </div>
       <div class="content">
-        <h1>Welcome to the scenic_photo template</h1>
-        <p>This simple, fixed width website template is released under a <a href="http://creativecommons.org/licenses/by/3.0">Creative Commons Attribution 3.0 Licence</a>. This means you are free to download and use it for personal and commercial projects. However, you <strong>must leave the 'design from css3templates.co.uk' link in the footer of the template</strong>.</p>
-        <p>This template is written entirely in <strong>HTML5</strong> and <strong>CSS3</strong>. The photo used in the design was taken by me.</p>
-        <p>You can view more free CSS3 web templates <a href="http://www.css3templates.co.uk">here</a>.</p>
-        <p>This template is a fully documented 5 page website, with an <a href="examples.html">examples</a> page that gives examples of all the styles available with this design. There is also a working PHP contact form on the contact page.</p>
+        <h1>Welcome to the Cyber Prime website</h1>
+        <p>If you are seeing this page, then you have access to our wwwroot directory.</p>
+        <p>This means that you have access to our computer or github repository.</p>
+        <p>Thank you for coming here but there is nothing for you.</p>
+        <p>Please use the links above to enter our real web pages.</p>
       </div>
     </div>
     <footer>

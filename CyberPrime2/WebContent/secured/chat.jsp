@@ -14,6 +14,10 @@ textarea
     margin:5px 0;
     padding:1%;
 }
+body{
+    background-color:white;
+}
+
 </style>
 <body>
 <div id="top">
@@ -22,14 +26,12 @@ You are logged in as:<br/><br/><br/>
 
 </div>
 <div id="chat">
-<textarea rows="50" cols="100" disabled="disabled" style="resize:none">
-Chat area.
+<textarea rows="50" cols="100" disabled="disabled" style="resize:none" placeholder="Messages will appear here.">
 </textarea>
 <br/><br/>
 <div id="post">
 <form name="input" action="html_form_action.asp" method="get">
-<textarea rows="2" cols="100" style="resize:none">
-Enter your message here. 
+<textarea rows="2" cols="100" style="resize:none" placeholder="Enter your message here.">
 </textarea>
 <input type="submit" value="Submit">
 </form>
