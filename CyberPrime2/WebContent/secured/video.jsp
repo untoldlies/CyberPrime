@@ -58,7 +58,7 @@ input.buttonRefresh{
 	</form>
 	<br>
 
-	<iframe id="iframe"width="700" height="500" src="http://${url}"></iframe>
+	<iframe id="iframe"width="775" height="520" src="http://${url}"></iframe>
 
 	</body>
 </html>
