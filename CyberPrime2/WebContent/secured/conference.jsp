@@ -49,10 +49,10 @@ bottom:100px;
 </head>
 <body>
 <div id="otherUsers">
-All the users appear here
+<img src="../images/videoConferenceOthers.PNG" alt="Conference" height="400" width="800">
 </div>
 <div id="yourself">
-your video here
+<img src="../images/videoConferenceYourself.PNG" alt="Conference" height="150" width="400">
 </div>
 <ul>
 					<li class="navi"><a class=naviwords href="">End Call</a>
