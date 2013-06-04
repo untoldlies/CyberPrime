@@ -8,6 +8,8 @@
   <link rel="stylesheet" type="text/css" href="../css/home.css" />
 <script>
 function changePage(source){
+	var service = source;
+	document.getElementById('notifications').innerHTML = "You are using "+service;
 	document.getElementById('iframe').src = source;
 }
 </script>

@@ -13,7 +13,7 @@ background-color:white;
 }
 
 input.buttonBack{
-  	background-image: url(../images/back.png);
+  	background-image: url(../images/back.png),url(images/back.png);
     background-color: transparent;
     background-repeat: no-repeat;
     background-position: 0px 0px;
@@ -25,7 +25,7 @@ input.buttonBack{
 }
 
 input.buttonForward{
-  background-image: url(../images/forward.png); 
+  background-image: url(../images/forward.png),url(images/forward.png); 
     background-color: transparent; 
     background-repeat: no-repeat; 
     background-position: 0px 0px;
@@ -37,7 +37,7 @@ input.buttonForward{
 }
 
 input.buttonRefresh{
-  background-image: url(../images/refresh.jpg); 
+  background-image: url(../images/refresh.jpg),url(images/refresh.jpg); 
     background-color: transparent; 
     background-repeat: no-repeat;  
     background-position: 0px 0px; 
@@ -50,13 +50,15 @@ input.buttonRefresh{
 </style>
 </head>
 <body>
-
-<form method="post" action="#">
+<form method="post" action="${pageContext.request.contextPath}\WebBrowsing">
 		<input type="button" class="buttonBack">
 		<input type="button" class="buttonForward">
-		<input type="text" name="url" placeholder="Enter url of the page">
+		<input type="text" name="url" placeholder="Enter url of the page" value="${url}">
 		<input type="button" class="buttonRefresh">
 	</form>
-	<iframe width="700" height="500" src=""></iframe>
+	<br>
+
+	<iframe id="iframe"width="700" height="500" src="http://${url}"></iframe>
+
 	</body>
 </html>
