@@ -47,13 +47,27 @@ input.buttonRefresh{
     padding-left: 35px;    
     vertical-align: middle;
 }
+
+::-webkit-scrollbar {
+      width: 15px;
+} /* this targets the default scrollbar (compulsory) */
+
+::-webkit-scrollbar-track {
+      background-color: #b46868;
+} /* the new scrollbar will have a flat appearance with the set background color */
+::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.2);
+} /* this will style the thumb, ignoring the track */
+::-webkit-scrollbar-corner {
+      background-color: #b46868;
+} /* if both the vertical and the horizontal bars appear, then perhaps the right bottom corner also needs to be styled */
 </style>
 </head>
 <body>
 <form method="post" action="${pageContext.request.contextPath}\WebBrowsing">
 		<input type="button" class="buttonBack">
 		<input type="button" class="buttonForward">
-		<input type="text" name="url" placeholder="Enter url of the page" value="${url}">
+		<input type="text" name="url" autocomplete="off"placeholder="Enter url of the page" value="${url}">
 		<input type="button" class="buttonRefresh">
 	</form>
 	<br>
