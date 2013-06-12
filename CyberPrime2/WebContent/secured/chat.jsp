@@ -18,26 +18,42 @@ textarea
 body{
     background-color:white;
 }
+#displayMessage{
+    width:100%;
+    height:300px;
+    border-style:solid;
+    border-width:1px;
+    border-color:black;
+}
 
 </style>
+<script>
+
+function postMessage()  {
+	
+	var input = document.getElementById('inputMessage').value; // save the object
+	var p = document.createElement('p');
+	p.textContent = input;
+	var displayMessage = document.getElementById('displayMessage');
+	displayMessage.appendChild(p);
+	document.getElementById('inputMessage').value = "";
+}
+
+</script>
 <body>
-<div id="top">
-<form id="form1">
-<input type="text" name="url" placeholder="Add users ID here.">
-<input type="submit" name="form1" value="Add">
-</form>
-</div>
 <br><br>
 <div id="chat">
-<textarea rows="20" cols="100" disabled="disabled" style="resize:none" placeholder="Messages will appear here.">
-</textarea>
+<div id="displayMessage">
+
+</div>
 <br/><br/>
 <div id="post">
-<form id="form2">
-<textarea rows="2" cols="100" style="resize:none" placeholder="Enter your message here.">
+
+<textarea id="inputMessage" rows="2" cols="100" style="resize:none" placeholder="Enter your message here.">
 </textarea>
-<input type="submit" name="form2" value="Post">
-</form>
+<input id="postMessage" type="button" value="Post" onclick="postMessage();">
+
+
 </div>
 </div>
 </body>
