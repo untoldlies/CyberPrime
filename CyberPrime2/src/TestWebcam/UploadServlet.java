@@ -1,11 +1,11 @@
-
+package TestWebcam;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class UploadServlet extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet  {
+public class UploadServlet extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet{
 	 private static final long serialVersionUID = 529869125345702992L;
 	    public UploadServlet() {
 	        super();
@@ -27,5 +27,4 @@ public class UploadServlet extends javax.servlet.http.HttpServlet implements jav
 	//Now you have the image bytes ready to save in File/DB/....etc..
 
 	    }
-
 }
