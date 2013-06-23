@@ -5,6 +5,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+
 public class UploadServlet extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet{
 	 private static final long serialVersionUID = 529869125345702992L;
 	    public UploadServlet() {
