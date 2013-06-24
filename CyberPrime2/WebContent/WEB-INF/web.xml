@@ -14,10 +14,10 @@
     <servlet-name>WebBrowsing</servlet-name>
     <servlet-class>cyberprime.servlets.WebBrowsing</servlet-class>
   </servlet>
-  <context-param>
-  <description>Location to store uploaded file</description>
-  <param-name>file-upload</param-name>
-  <param-value>
-  		C:\Users\Tan Wai Kit\Desktop\FileUploadApps</param-value>
-  </context-param>
+  
+  <servlet>
+  <display-name>FileTransfer</display-name>
+  	<servlet-name>FileTransfer</servlet-name>
+  	<servlet-class>cyberprime.servlets.FileTransfer</servlet-class>
+  </servlet>
 </web-app>
