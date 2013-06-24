@@ -1,0 +1,238 @@
+@CHARSET "ISO-8859-1";
+
+body{
+	background-color:gray;
+}
+#tabMenu{
+	height:100%;
+	min-height:600px;
+	position:absolute;
+	top:0;
+	left:0;
+	width:200px;
+	z-index:1;
+    background-color: #8470FF;
+}
+
+.moving_bg{
+    background-color:#104E8B;
+    position:absolute;
+    top:0;
+    left:0; 
+    width: 200px;
+    height:98px;
+    z-index: 190;
+
+}
+
+#userMenu{
+	height:50px;
+	width: 100%;
+	min-width:920px;
+	position:absolute;
+	top:0;
+	left:0;
+	z-index:0;
+	background-color:darkgray;
+}
+
+.tabsContent .tabs{
+    width: 200px;
+	position:relative;
+	bottom:20px;
+	right:25%;
+	display:block;
+	padding: 20% 0 30% 0;
+    text-align:center;
+    color: #ffffff;
+    z-index: 200;
+    border-bottom:solid;
+    border-bottom-width:1px;
+    border-color:white;
+}
+
+.tabs:hover{
+	cursor:pointer;
+}
+.tabs:active{
+	background-color:#436EEE;
+}
+
+.menu li{
+	display:block;
+	cursor:pointer;
+}
+
+.middlemenu{
+	background-color:gray;
+	float:left;
+	position:relative;
+	top:-25px;
+	left:160px;
+	padding:19px 20px;
+	margin:0 20px 0 0;;
+}
+
+.anon{
+	background-color:transparent;
+}
+
+#anon{
+	float:left;
+	position:relative;
+	left:130px;
+	top:-10px;
+}
+
+.rightmenu{
+	background-color:gray;
+	position:relative;
+	top:-25px;
+	left:20px;
+	float:right;
+	margin:0 20px;
+	padding:19px 9px;
+}
+
+#notificationsTab{
+	text-align:center;
+	width:200px;
+}
+
+#notifications{
+	display:none;
+	z-index:200;
+	background-color: rgba(192,192,192,0.7);
+	width:200px;
+	height:200px;
+	position:absolute;
+	top:50px;
+	right:95px;
+	float:right;
+	padding:19px 8px;
+	border-style:solid;
+	border-color:black;
+	border-width:1px;
+	border-top-width:0px;
+
+}
+
+#users{
+	display:none;
+	z-index:200;
+	background-color: rgba(192,192,192,0.7);
+	width:200px;
+	position:absolute;
+	top:50px;
+	left:200px;
+	float:left;
+	padding:19px 8px;
+}
+
+#content{
+	background-color:gray;
+	position:relative;
+	top:50px;
+	left:200px;
+	width:80%;
+	height:100%;
+	min-width:700px;
+	min-height:500px;
+	z-index:200;
+
+}
+
+#iframe {
+	width:100%;
+	height:90%;
+	min-height:500px;
+}
+
+.anonSwitch {
+    position: relative; 
+    width: 90px;
+    -webkit-user-select:none; 
+    -moz-user-select:none; 
+    -ms-user-select: none;
+}
+.anonSwitch-checkbox {
+    display: none;
+}
+.anonSwitch-label {
+    display: block;
+    background-color:white;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid #999999; 
+    border-radius: 0px;
+}
+.anonSwitch-inner {
+    width: 200%;
+    margin-left: -100%;
+    -moz-transition: margin 0.3s ease-in 0s; 
+    -webkit-transition: margin 0.3s ease-in 0s;
+    -o-transition: margin 0.3s ease-in 0s; 
+    transition: margin 0.3s ease-in 0s;
+}
+.anonSwitch-inner:before, .anonSwitch-inner:after {
+    float: left; 
+    width: 50%; 
+    height: 30px; 
+    padding: 0; 
+    line-height: 26px;
+    font-size: 14px; 
+    color: white; 
+    font-family: Trebuchet, Arial, sans-serif; 
+    font-weight: bold;
+    -moz-box-sizing: border-box; 
+    -webkit-box-sizing: border-box; 
+    box-sizing: border-box;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+}
+.anonSwitch-inner:before {
+    content: "On";
+    padding-left: 10px;
+    background-color: #2E8DEF; color: #FFFFFF;
+}
+.anonSwitch-inner:after {
+    content: "Off";
+    padding-right: 10px;
+    background-color: #CCCCCC; color: #333333;
+    text-align: right;
+}
+.anonSwitch-switch {
+    width: 25px; 
+    margin: 0px;
+    background: gray;
+    position: absolute; 
+    top: 0; 
+    bottom: 0; 
+    right: 65px;
+    -moz-transition: all 0.3s ease-in 0s; 
+    -webkit-transition: all 0.3s ease-in 0s;
+    -o-transition: all 0.3s ease-in 0s; 
+    transition: all 0.3s ease-in 0s; 
+}
+.anonSwitch-checkbox:checked + .anonSwitch-label .anonSwitch-inner {
+    margin-left: 0;
+}
+.anonSwitch-checkbox:checked + .anonSwitch-label .anonSwitch-switch {
+    right: 0px; 
+}
+
+span{
+	color:silver;
+	font-family: Arial Black;
+	font-size: 20px;
+	font-wieght:bold;
+}
+
+button{
+	background-color:transparent;
+	border:none !important;
+}
+
+span:hover{
+	color:black;
+}

@@ -61,6 +61,10 @@ input.buttonRefresh{
 ::-webkit-scrollbar-corner {
       background-color: #b46868;
 } /* if both the vertical and the horizontal bars appear, then perhaps the right bottom corner also needs to be styled */
+#iframe{
+ width:100%;
+ height:90%;
+}
 </style>
 </head>
 <body>
@@ -72,7 +76,7 @@ input.buttonRefresh{
 	</form>
 	<br>
 
-	<iframe id="iframe"width="775" height="520" src="http://${url}"></iframe>
+	<iframe id="iframe" src="http://${url}"></iframe>
 
 	</body>
 </html>
