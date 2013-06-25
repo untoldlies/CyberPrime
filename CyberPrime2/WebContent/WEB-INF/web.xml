@@ -20,4 +20,12 @@
   	<servlet-name>FileTransfer</servlet-name>
   	<servlet-class>cyberprime.servlets.FileTransfer</servlet-class>
   </servlet>
+  
+  <context-param> 
+    <description>Location to store uploaded file</description> 
+    <param-name>file-upload</param-name> 
+    <param-value>
+         D:\Temp\
+     </param-value> 
+</context-param>
 </web-app>
