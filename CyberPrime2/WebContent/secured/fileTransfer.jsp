@@ -29,16 +29,18 @@ body {
 			<!-- action should change back to servletUpload -->
 			<form action="${pageContext.request.contextPath}/FileTransfer" method="post"
 				enctype="multipart/form-data">
-				<input type="file" name="file" size="10000000" /> <br /> 
-				</br> 
-				</br> 
-				</br> 
-				</br> 
-				</br> 
-				</br> 
-				<strong>Now please type in the person's ID that you want to transfer your file to:</strong> 
+					<strong>Now please type in the person's ID that you want to transfer your file to:</strong> 
 				<input type="text" name="Id" class="calc-input" maxlength="15"
-					onChange="valueChange('0');"> </br> <input type="submit"
+					onChange="valueChange('0');">
+
+				</br> 
+				</br> 
+				</br> 
+				</br> 
+				</br> 
+				</br> 
+								<input type="file" name="file" size="10000000" /> <br /> 
+ </br> <input type="submit"
 					value="Upload File" />
 			</form>
 		</center>
