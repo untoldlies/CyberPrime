@@ -2,22 +2,23 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html>
 <head>
-<title>Test Web Cam</title>
-<style type="text/css">
 
-</style>
 <!--  For loading scriptcam  -->
 <script language="JavaScript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script language="JavaScript" src="//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
 <script language="JavaScript" src="resources/scriptcam.js"></script>
-<script type="text/javascript">
 
+<style type="text/css">
+
+</style>
+
+<script>
 <!-- Initialising Webcam -->
 $(document).ready(function() {
 	$("#webcam").scriptcam({ // insert ScriptCam on a div element having the id 'webcam'
-		
-		onError: oopsError
 		promptWillShow: showMessage //To warn users to ignore warning message
+		onError: oopsError
+		
 // 		width:800, //Set dimensions to fit in iframe
 // 		height:600
 		onWebcamReady: webcamFound //Lists webcam and microphones
