@@ -20,7 +20,7 @@ body{
 }
 #displayMessage{
     width:100%;
-    height:300px;
+    height:350px;
     border-style:solid;
     border-width:1px;
     border-color:black;
@@ -32,8 +32,11 @@ body{
 function postMessage()  {
 	
 	var input = document.getElementById('inputMessage').value; // save the object
+	var userName = "Username said:";
+	var timestamp = new Date();
+	var conMessage = userName + " " + input + " (" + timestamp + ")";
 	var p = document.createElement('p');
-	p.textContent = input;
+	p.textContent = conMessage;
 	var displayMessage = document.getElementById('displayMessage');
 	displayMessage.appendChild(p);
 	document.getElementById('inputMessage').value = "";
@@ -41,9 +44,9 @@ function postMessage()  {
 
 </script>
 <body>
-<br><br>
 <div id="chat">
-<div id="displayMessage">
+<h2>Chat</h2>
+<div id="displayMessage" style="overflow-y:auto;">
 
 </div>
 <br/><br/>
