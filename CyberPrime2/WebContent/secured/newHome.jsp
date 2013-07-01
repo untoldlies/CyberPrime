@@ -65,7 +65,7 @@ Clients client = (Clients) session.getAttribute("c");
 
 <!--  Disable for auto login --> 
 
-<li class="middlemenu" id="userid"><<%-- %=client.getUserId()% --%>></li>
+<li class="middlemenu" id="userid"><%=client.getUserId() %></li>
 
 
 <li class="middlemenu anon">Anonymous Mode</li>

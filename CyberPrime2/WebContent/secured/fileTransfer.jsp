@@ -31,7 +31,7 @@ Clients client = (Clients) session.getAttribute("c");
 			<form action="${pageContext.request.contextPath}/FileTransfer" method="post"
 				enctype="multipart/form-data">
 					<strong>Now please type in the person's ID that you want to transfer your file to:</strong> 
-				<input type="text" name="Id" class="calc-input" maxlength="15"
+				<input type="text" name="Id" class="calc-input" maxlength="25"
 					onChange="valueChange('0');">
 
 				</br> 

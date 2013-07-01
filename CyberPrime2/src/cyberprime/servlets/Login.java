@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import cyberprime.entities.Clients;
+import cyberprime.entities.Sessions;
 import cyberprime.entities.dao.ClientsDAO;
+import cyberprime.entities.dao.SessionsDAO;
 
 /**
  * Servlet implementation class Login
@@ -43,7 +45,6 @@ public class Login extends HttpServlet {
 		Clients client = (Clients) session.getAttribute("client");
 		String pattern = (String)request.getParameter("pattern");
 		
-		System.out.println(client.getUserId() + client.getImageHash() + client.getEmail());
 		if(pattern.length() != 0){
 			
 			client.setPattern(pattern);
@@ -70,6 +71,8 @@ public class Login extends HttpServlet {
 		else if(c != null){
 			
 			if(client.getImageHash().equals(c.getImageHash()) && client.getPattern().equals(c.getPattern())){
+				Sessions s = new Sessions(session.getId(),c.getUserId());
+				s = SessionsDAO.createSession(s);
 				session.setAttribute("c", c);
 				request.getRequestDispatcher("secured/newHome.jsp").forward(request, response);
 			}	

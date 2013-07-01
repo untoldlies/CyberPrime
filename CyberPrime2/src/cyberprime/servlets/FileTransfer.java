@@ -1,24 +1,23 @@
 package cyberprime.servlets;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.util.Iterator;
+import java.util.List;
 
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.swing.JProgressBar;
 
 import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.RequestContext;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.servlet.ServletRequestContext;
-import org.apache.commons.io.output.*;
+
+import cyberprime.entities.Sessions;
+import cyberprime.entities.dao.SessionsDAO;
 
 
 
@@ -31,7 +30,6 @@ public class FileTransfer extends HttpServlet {
 	private int maxFileSize = 1000000 * 1000;
 	private File file;
 	private String Id = null;
-	private String ID = "tnwaikit";
 	
 	public void init() {
 		// Get the file location where it would be stored.
@@ -97,55 +95,58 @@ public class FileTransfer extends HttpServlet {
 					FileItem item = iterator.next();
 					if (item.isFormField()) {
 						String fieldName = item.getFieldName();
-						if (fieldName.equalsIgnoreCase("Id"))
+						if (fieldName.equalsIgnoreCase("Id")) 
 							Id = item.getString();
-
-						if (!Id.equalsIgnoreCase(ID)) {
-							out.println("<p><strong>Sorry There Is No Such User, Please Try Again</strong></p>");
-							break;
-						}
-					}
-
-					else {
-						try {
-
-							if (!item.isFormField()) {
-								// Get the uploaded file parameters
-
-								String fileName = item.getName();
-
-								// Write the file
-								if (fileName.lastIndexOf("\\") >= 0) {
-									file = new File(filePath
-											+ fileName.substring(fileName
-													.lastIndexOf("\\")));
-								} else {
-									file = new File(filePath
-											+ fileName.substring(fileName
-													.lastIndexOf("\\") + 1));
-								}
-								out.println("<p><strong>Thank You For Waiting</strong></p>");
-								item.write(file);
-								out.println("Uploaded Filename: " + fileName
-										+ "<br>");
-								System.out.println("printed");
-							}
-
-							out.println("</body>");
-							out.println("</html>");
+							Sessions s = new Sessions(null,Id);
+							s = SessionsDAO.searchSessions(s);
+						
 							
-/*							if (file upload == true) {
- * 								send notification to the receiver
-							};
-*/
-						} catch (Exception ex) {
-							out.println("<p><strong>No File Found, Please Try Again</strong></p>");
-						}
-					}
+							if(s.getSessionId()== null){
+								System.out.println("something");
+								out.println("<p><strong>Sorry There Is No Such User, Please Try Again</strong></p>");
+								break;
+							}
+							
+							else{
+								System.out.println("User identified");
+								try {
+
+									if (!item.isFormField()) {
+										// Get the uploaded file parameters
+
+										String fileName = item.getName();
+
+										// Write the file
+										if (fileName.lastIndexOf("\\") >= 0) {
+											file = new File(filePath
+													+ fileName.substring(fileName
+															.lastIndexOf("\\")));
+										} else {
+											file = new File(filePath
+													+ fileName.substring(fileName
+															.lastIndexOf("\\") + 1));
+										}
+										out.println("<p><strong>Thank You For Waiting</strong></p>");
+										item.write(file);
+										out.println("Uploaded Filename: " + fileName
+												+ "<br>");
+										System.out.println("printed");
+									}
+
+									out.println("</body>");
+									out.println("</html>");
+									
+								} catch (Exception ex) {
+									out.println("<p><strong>No File Found, Please Try Again</strong></p>");
+								}
+								
+							}
+					
 				}
 			}
 
-		} catch (Exception e) {
+		}
+			} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

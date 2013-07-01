@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import cyberprime.entities.Clients;
+import cyberprime.entities.Sessions;
+import cyberprime.entities.dao.SessionsDAO;
+
 /**
  * Servlet implementation class Logout
  */
@@ -36,8 +40,10 @@ public class Logout extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		
+		Clients client = (Clients)session.getAttribute("c");
 		try{
+			Sessions s = new Sessions(session.getId(), client.getUserId());
+			s = SessionsDAO.deleteSession(s);
 			session.removeAttribute("c");
 			session.invalidate();
 			response.sendRedirect("template.jsp");

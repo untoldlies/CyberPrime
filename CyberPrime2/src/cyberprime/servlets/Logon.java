@@ -133,7 +133,6 @@ public class Logon extends HttpServlet {
 				
 				Clients c = null;
 				c = ClientsDAO.retrieveClient(client);
-				System.out.println(c.getImageHash()+c.getEmail()+c.getUserId());
 					session.setAttribute("client", client);
 					request.getRequestDispatcher("patternLogin.jsp").forward(request, response);	
 					
