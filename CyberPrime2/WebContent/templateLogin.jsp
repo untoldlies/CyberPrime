@@ -49,20 +49,23 @@
         </div>
       </div>
       <div class="content">
-         <form method="post" action="secured/Home.jsp">
+         <form method="post" action="${pageContext.request.contextPath}/Logon" enctype="multipart/form-data">
 		 <h3>Login:</h3>
-		 <p>You are logging in with your IP address: 127.0.0.1</p>
+		   
+  ${loginResult}
+  ${regResult}
+<!-- 		 <p>You are logging in with your IP address: 127.0.0.1</p>
 		 <p>Wrong IP address? Please type in your correct IP Address here:<br/>
 				<input type="text" name="ip_oct_1" class="calc-input" maxlength="3" onChange="valueChange('0');"> .
 				<input type="text" name="ip_oct_2" class="calc-input" maxlength="3" onChange="valueChange('0');"> .
 				<input type="text" name="ip_oct_3" class="calc-input" maxlength="3" onChange="valueChange('0');"> .
 				<input type="text" name="ip_oct_4" class="calc-input" maxlength="3" onChange="valueChange('0');">
-				<!--CSS to style it so it becomes 3 characters wide, JS to make sure all are numbers-->
+				CSS to style it so it becomes 3 characters wide, JS to make sure all are numbers -->
          </p>
 		 <!--Auto detect IP address-->
          <p>Upload your image file for verification: <br/><input type="file" name="datafile" size="40"></p>
          <div>
-         <input type="submit" value="Login">
+         <input type="submit" value="next">
          </div>
 		 </form>
   </div> 
@@ -82,5 +85,6 @@
       $('ul.sf-menu').sooperfish();
     });
   </script>
+
 </body>
 </html>

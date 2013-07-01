@@ -7,6 +7,7 @@
 <title>Homepage</title>
 
 <script src="../js/newHome.js"></script>
+<script src="js/newHome.js"></script>
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script> 
@@ -26,18 +27,22 @@ $(document).ready(function(){
 
 });
 
-
 function changePage(src) {
-	
-	var iframe = document.getElementById('iframe');
-	iframe.src = src;
+    $("#content").load(src);
 }
+
 </script>
+
 <link rel="stylesheet" type="text/css" href="../css/newHome.css"/>
+<link rel="stylesheet" type="text/css" href="css/newHome.css"/>
 
 </head>
 <body>
-
+<%@ page import ="cyberprime.entities.Clients" %>
+<%
+session = request.getSession();
+Clients client = (Clients) session.getAttribute("c");
+%>
 <div id="tabMenu">
 
 			<div class="moving_bg">
@@ -45,11 +50,11 @@ function changePage(src) {
 			</div>	
 			
 <ul class="tabsContent">
-<li class="tabs" onclick="changePage('Home.jsp');">home</li>
-<li class="tabs" onclick="changePage('video.jsp');">web browsing</li>
-<li class="tabs" onclick="changePage('fileTransfer.jsp');">file transfer</li>
-<li class="tabs" onclick="changePage('chat.jsp');">chat</li>
-<li class="tabs" onclick="changePage('conference.jsp')">video conference</li>
+<li class="tabs" onclick="changePage();">home</li>
+<li class="tabs" onclick="changePage('secured/video.jsp');changePage('video.jsp');">web browsing</li>
+<li class="tabs" onclick="changePage('secured/fileTransfer.jsp');changePage('fileTransfer.jsp');">file transfer</li>
+<li class="tabs" onclick="changePage('secured/chat.jsp');changePage('chat.jsp');">chat</li>
+<li class="tabs" onclick="changePage('secured/conference.jsp');changePage('conference.jsp');">video conference</li>
 </ul>
 
 </div>
@@ -57,7 +62,7 @@ function changePage(src) {
  	
  	<div id="userMenu">
 <ul class="menu">
-<li class="middlemenu" id="userid">UserId</li>
+<li class="middlemenu" id="userid"><%=client.getUserId()%></li>
 <li class="middlemenu anon">Anonymous Mode</li>
 <li id="anon"class="anon"><div class="anonSwitch">
     <input type="checkbox" name="anonSwitch" class="anonSwitch-checkbox" id="anonswitch">
@@ -66,26 +71,31 @@ function changePage(src) {
         <div class="anonSwitch-switch"></div>
     </label>
 </div></li>
-<li class="rightmenu">logout</li>
+<li class="rightmenu"><form method="post" action="${pageContext.request.contextPath}/Logout"><input type="submit" value="logout"></form></li>
 <li class="rightmenu" id="notificationsTab">Notifications</li>
 </ul>
 	<div id="users">
 	<input type="text" id="username"><input type="button" id="add" value="add" onclick="addUser();"/>
+	
 	<div id="usernames">
 	</div>
+	
+	</div>
+	
+	<div id="background"></div>
+	
+	<div id="contentFrame">
+		<div id="content"></div>
 	</div>
 
-	<div id = "notifications">
-	<p><br><br>All notifications here</p>
-
-	</div>
+			<div id = "notifications">
+				<div id="jgrowl-notifications"></div>
+		<p><br><br>All notifications here</p>
+			</div>
 
 </div>
 
-	<div id="content">
-	<iframe src="" id ="iframe" scrolling="no" frameborder="0">Content here</iframe>
 	
-	</div>
-
+	
 </body>
 </html>

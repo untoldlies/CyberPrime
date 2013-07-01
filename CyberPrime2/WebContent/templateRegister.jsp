@@ -1,3 +1,4 @@
+
 <!DOCTYPE HTML>
 <html>
 
@@ -12,6 +13,7 @@
 </head>
 
 <body>
+
   <div id="main">
     <header>
       <div id="logo">
@@ -49,20 +51,21 @@
         </div>
       </div>
       <div class="content">
-         <form>
+         <form method="post" action="${pageContext.request.contextPath}/Registration" enctype="multipart/form-data">
 		 <h3>Registration:</h3>
-		 <p>You are registering with your IP address: 127.0.0.1</p>
+		   ${regResult}
+<!-- 	 <p>You are registering with your IP address: 127.0.0.1</p>
 		 <p>Wrong IP address? Please type in your correct IP Address here:<br/>
 				<input type="text" size="3" name="ip_oct_1" class="calc-input" maxlength="3" onChange="valueChange('0');"> .
 				<input type="text" size="3" name="ip_oct_2" class="calc-input" maxlength="3" onChange="valueChange('0');"> .
 				<input type="text" size="3" name="ip_oct_3" class="calc-input" maxlength="3" onChange="valueChange('0');"> .
 				<input type="text" size="3" name="ip_oct_4" class="calc-input" maxlength="3" onChange="valueChange('0');">
-				<!--CSS to style it so it becomes 3 characters wide, JS to make sure all are numbers-->
-         </p>
+				CSS to style it so it becomes 3 characters wide, JS to make sure all are numbers
+         </p> -->
 		 <!--Auto detect IP address-->
-         <p>Please specify an image file as a password: <br/><input type="file" name="datafile" size="40"></p>
-		 <p>Please specify a second image file as a honeypot password (optional): <br/><input type="file" name="datafile" size="40"></p>
-		 <p>Please insert your phone number: <br/><input type="tel" required /></p>
+         <p>Please specify an image file as a password: <br/><input type="file" name="image"></p>
+<!-- 		 <p>Please specify a second image file as a honeypot password (optional): <br/><input type="file" name="datafile" size="40"></p> -->
+		 <p>Email: <br/><input type="text" name="email"required /></p>
          <div>
          <input type="submit" value="Send">
          </div>

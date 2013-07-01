@@ -22,7 +22,11 @@ body {
 <title>File Upload</title>
 </head>
 <body>
-
+<%@ page import ="cyberprime.entities.Clients" %>
+<%
+session = request.getSession();
+Clients client = (Clients) session.getAttribute("c");
+%>
 	<div class="main">
 		<center class="center">
 			<h3>Please upload your files that you want to transfer to:</h3>
