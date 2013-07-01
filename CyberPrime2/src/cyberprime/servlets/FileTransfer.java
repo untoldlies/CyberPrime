@@ -29,11 +29,9 @@ public class FileTransfer extends HttpServlet {
 	private boolean isMultipart;
 	private String filePath;
 	private int maxFileSize = 1000000 * 1000;
-	private int maxMemSize = 1000000 * 1000;
 	private File file;
 	private String Id = null;
 	private String ID = "tnwaikit";
-	private JProgressBar progressBar;
 	
 	public void init() {
 		// Get the file location where it would be stored.
