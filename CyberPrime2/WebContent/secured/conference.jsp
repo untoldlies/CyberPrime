@@ -71,7 +71,7 @@ $(function() {
                         }
                         if (pos >= 4 * 320 * 240) {
                                 ctx.putImageData(img, 0, 0);
-                                $.post("/TestWebCam/UploadServlet", {type: "data", image: canvas.toDataURL("image/png")});
+                                $.post("/servlets/UploadServlet", {type: "data", image: canvas.toDataURL("image/png")});
                                 pos = 0;
                         }
                 };
@@ -80,7 +80,7 @@ $(function() {
                         image.push(data);                        
                         pos+= 4 * 320;                        
                         if (pos >= 4 * 320 * 240) {
-                                $.post("/TestWebCam/UploadServlet", {type: "pixel", image: image.join('|')});
+                                $.post("/servlets/UploadServlet", {type: "pixel", image: image.join('|')});
                                 pos = 0;
                         }
                 };

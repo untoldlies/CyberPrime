@@ -1,4 +1,4 @@
-package TestWebcam;
+package cyberprime.servlets;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
