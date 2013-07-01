@@ -2,7 +2,7 @@
 <title>Test Web Cam</title>
 <style type="text/css">
 #webcam, #canvas {
-    width: 320px;
+    width: 640px;
     border:20px solid #333;
     background:#eee;
     -webkit-border-radius: 20px;
@@ -33,7 +33,6 @@
 </head><body>
 <p id="status" style="height:22px; color:#c00;font-weight:bold;"></p>
 <div id="webcam">
-    <span>Your WebCam should be here!</span>
 </div>
 
 <p style="width:360px;text-align:center; ">
@@ -86,8 +85,8 @@ $(function() {
                 };
         }
         $("#webcam").webcam({
-                width: 320,
-                height: 240,
+                width: 640,
+                height: 480,
                 mode: "callback",
                 swffile: "resources/jscam_canvas_only.swf",
                 onSave: saveCB,
