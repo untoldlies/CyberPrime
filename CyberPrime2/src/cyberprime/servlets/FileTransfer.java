@@ -20,7 +20,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import org.apache.commons.io.output.*;
 
-import cyberprime.servlets.ProgressBarServlet.Task;
+
 
 @WebServlet("/FileTransfer")
 public class FileTransfer extends HttpServlet {
@@ -34,8 +34,7 @@ public class FileTransfer extends HttpServlet {
 	private String Id = null;
 	private String ID = "tnwaikit";
 	private JProgressBar progressBar;
-	private Task task;
-
+	
 	public void init() {
 		// Get the file location where it would be stored.
 		filePath = getServletContext().getInitParameter("file-upload");
@@ -60,11 +59,6 @@ public class FileTransfer extends HttpServlet {
 		isMultipart = ServletFileUpload.isMultipartContent(request);
 		response.setContentType("text/html");
 
-		TestProgressListener testProgressListener = new TestProgressListener();
-		upload.setProgressListener(testProgressListener);
-
-		HttpSession session = request.getSession();
-		session.setAttribute("testProgressListener", testProgressListener);
 
 		if (!isMultipart) {
 			out.println("<html>");

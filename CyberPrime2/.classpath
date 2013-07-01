@@ -13,10 +13,5 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="C:/Users/Tan Wai Kit/Desktop/lib/commons-io-2.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Tan Wai Kit/Desktop/lib/commons-io-2.4-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Tan Wai Kit/Desktop/lib/commons-io-2.4-sources.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Tan Wai Kit/Desktop/lib/commons-io-2.4-tests.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Tan Wai Kit/Desktop/lib/commons-io-2.4-test-sources.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
