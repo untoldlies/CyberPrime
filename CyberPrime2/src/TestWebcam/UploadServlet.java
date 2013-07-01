@@ -26,6 +26,7 @@ public class UploadServlet extends javax.servlet.http.HttpServlet implements jav
 
 	        String byteStr = image.split(",")[1];
 	        byte[] bytes = Base64.decode(byteStr);
+	        System.out.println("Servlet working.");
 	//Now you have the image bytes ready to save in File/DB/....etc..
 
 	    }
