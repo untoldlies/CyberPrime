@@ -28,6 +28,8 @@ function addUser(){
 	$('#usernames').animate({
 		height : $('#usernames').height() + $('#usernames').child.height()},500);
 	}
+	
+	$.jGrowl("Hello world!", {header: 'User Requested'});
 }
 
 function removeUser(){

@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Homepage</title>
-
+<!-- comment to commit -->
 <script src="../js/newHome.js"></script>
 <script src="js/newHome.js"></script>
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
