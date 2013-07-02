@@ -20,6 +20,7 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletRequestContext;
 
 import cyberprime.entities.Clients;
 import cyberprime.entities.dao.ClientsDAO;
+import cyberprime.util.EmailValidator;
 import cyberprime.util.ImageEncryption;
 import cyberprime.util.ImageValidator;
 import cyberprime.util.RandomString;
@@ -69,56 +70,62 @@ public class Registration extends HttpServlet {
 			List<FileItem> items = upload.parseRequest(req);
 			Iterator<FileItem> iterator =  items.iterator();
 			
-				while(iterator.hasNext()){
-				FileItem item = iterator.next();
-					if(item.isFormField()){
-						String fieldName = item.getFieldName();
-						if(fieldName.equalsIgnoreCase("email"))
+			while(iterator.hasNext()){
+			FileItem item = iterator.next();
+				if(item.isFormField()){
+					String fieldName = item.getFieldName();
+					if(fieldName.equalsIgnoreCase("email")){
 						client.setEmail(item.getString());
+					}
+
+					EmailValidator ev = new EmailValidator();
+					if(!ev.validate(client.getEmail())){
+						Object obj = new Object();
+						obj = "<p style='color:red'>*Invalid email address</p>";
+						request.setAttribute("regResult", obj);
+						request.getRequestDispatcher("templateRegister.jsp").forward(request, response);
+						return;
 					}
 					
 					else{
-						String fileName = item.getName();
-						saveFileName = repos + fileName;
-						File uploadedFile = new File(saveFileName);
+						System.out.println("Email validated");
+					}
+					
+
+				}
+				
+				else{
+					String fileName = item.getName();
+					saveFileName = repos + fileName;
+					File uploadedFile = new File(saveFileName);
+					
+					if(!fileName.isEmpty()){
 						
-						if(!fileName.isEmpty()){
-							
-							ImageValidator iv = new ImageValidator();
-							
-							if(iv.validate(fileName)){
-								try{
-									item.write(uploadedFile);
-								}catch(Exception e){
-									Object obj = new Object();
-									obj = "<p style='color:red'>*Access denied</p>";
-									request.setAttribute("regResult", obj);
-									request.getRequestDispatcher("templateRegister.jsp").forward(request, response);
-									return;
-								}
 
-								en = new ImageEncryption(uploadedFile.getAbsolutePath());
-
-								client.setImageHash(en.getHash());
-								client.setImageSize(en.getSize());
-								client.setImageExtension(en.getExtension());
-								
-								session.setAttribute("image",fileName);
-							}
-							
-							else{
+						ImageValidator iv = new ImageValidator();
+						
+						if(iv.validate(fileName)){
+							try{
+								item.write(uploadedFile);
+							}catch(Exception e){
 								Object obj = new Object();
-								obj = "<p style='color:red'>*Unauthorized file type or file name</p>";
+								obj = "<p style='color:red'>*Access denied</p>";
 								request.setAttribute("regResult", obj);
 								request.getRequestDispatcher("templateRegister.jsp").forward(request, response);
 								return;
 							}
 
-						}
+							en = new ImageEncryption(uploadedFile.getAbsolutePath());
 
-						else{
+							client.setImageHash(en.getHash());
+							client.setImageSize(en.getSize());
+							client.setImageExtension(en.getExtension());
+							
+							session.setAttribute("image",fileName);
+						}
+						else if(!iv.validate(fileName)){
 							Object obj = new Object();
-							obj = "<p style='color:red'>*Please choose a file</p>";
+							obj = "<p style='color:red'>*Invalid email address</p>";
 							request.setAttribute("regResult", obj);
 							request.getRequestDispatcher("templateRegister.jsp").forward(request, response);
 							return;
@@ -126,7 +133,18 @@ public class Registration extends HttpServlet {
 
 
 					}
+
+					else{
+						Object obj = new Object();
+						obj = "<p style='color:red'>*Please choose a file</p>";
+						request.setAttribute("regResult", obj);
+						request.getRequestDispatcher("templateRegister.jsp").forward(request, response);
+						return;
+					}
+
+
 				}
+			}
 				response.reset();
 				response.setHeader("Content-Disposition", "inline");
 				response.setHeader("Cache-Control", "no-cache");

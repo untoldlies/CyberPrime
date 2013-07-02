@@ -76,7 +76,7 @@ Clients client = (Clients) session.getAttribute("c");
         <div class="anonSwitch-switch"></div>
     </label>
 </div></li>
-<li class="rightmenu"><form method="post" action="${pageContext.request.contextPath}/Logout"><input type="submit" value="logout"></form></li>
+<li class="rightmenu"><form method="post" action="${pageContext.request.contextPath}/Logout"><input type="submit" id="logout" value="logout"></form></li>
 <li class="rightmenu" id="notificationsTab">Notifications</li>
 </ul>
 	<div id="users">

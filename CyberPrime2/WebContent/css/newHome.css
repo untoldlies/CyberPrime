@@ -236,6 +236,14 @@ span{
 	font-wieght:bold;
 }
 
+input#logout{
+
+	background-color:transparent;
+	border:none !important;
+	cursor:pointer
+	
+}
+
 button{
 	background-color:transparent;
 	border:none !important;

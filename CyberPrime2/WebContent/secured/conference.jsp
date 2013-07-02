@@ -28,16 +28,17 @@
 #canvas {    border:20px solid #ccc;
     background:#eee;
 }
-</style><script type="text/javascript" src="resources/jquery-1.js"></script>
+</style><script type="text/javascript" src="resources/jquery-1.js" ></script>
+<script type="text/javascript" src="secured/resources/jquery-1.js" ></script>
 <script type="text/javascript" src="resources/jquery.js"></script>
+<script type="text/javascript" src="secured/resources/jquery.js"></script>
 </head><body>
 <p id="status" style="height:22px; color:#c00;font-weight:bold;"></p>
 <div id="webcam">
 </div>
 
 <p style="width:360px;text-align:center; ">
-    <a href="javascript:webcam.capture(3);changeFilter();void(0);">Take a picture after 3 seconds</a> |
-    <a href="javascript:webcam.capture();changeFilter();void(0);">Take a picture instantly</a></p>
+    <a href="javascript:webcam.capture();changeFilter();void(0);">Start Streaming</a></p>
 
 <script type="text/javascript">
 var pos = 0;
@@ -89,8 +90,12 @@ $(function() {
                 height: 480,
                 mode: "callback",
                 swffile: "resources/jscam_canvas_only.swf",
+                swffile: "secured/resources/jscam_canvas_only.swf",
+               
                 onSave: saveCB,
                 onCapture: function () {
+          
+                	console.log("Saving");
                         webcam.save();
                 },
                 debug: function (type, string) {

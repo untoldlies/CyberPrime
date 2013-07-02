@@ -41,6 +41,16 @@
     <servlet-name>Login</servlet-name>
     <url-pattern>/Login</url-pattern>
   </servlet-mapping>
+  
+    <servlet>
+    <servlet-name>Logout</servlet-name>
+    <servlet-class>cyberprime.servlets.Logout</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Logout</servlet-name>
+    <url-pattern>/Logout</url-pattern>
+  </servlet-mapping>
+  
   <servlet>
     <display-name>FileTransfer</display-name>
     <servlet-name>FileTransfer</servlet-name>
