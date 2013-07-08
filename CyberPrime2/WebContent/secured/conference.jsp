@@ -28,17 +28,15 @@
 #canvas {    border:20px solid #ccc;
     background:#eee;
 }
-</style><script type="text/javascript" src="resources/jquery-1.js" ></script>
-<script type="text/javascript" src="secured/resources/jquery-1.js" ></script>
+</style><script type="text/javascript" src="resources/jquery-1.js"></script>
 <script type="text/javascript" src="resources/jquery.js"></script>
-<script type="text/javascript" src="secured/resources/jquery.js"></script>
 </head><body>
 <p id="status" style="height:22px; color:#c00;font-weight:bold;"></p>
 <div id="webcam">
 </div>
 
-<p style="width:360px;text-align:center; ">
-    <a href="javascript:webcam.capture();changeFilter();void(0);">Start Streaming</a></p>
+<p style="width:360px;text-align:center; ">|
+    <a href="javascript:webcam.capture();changeFilter();void(0);">TEST</a></p>
 
 <script type="text/javascript">
 var pos = 0;
@@ -86,21 +84,21 @@ $(function() {
                 };
         }
         $("#webcam").webcam({
-                width: 640,
-                height: 480,
-                mode: "callback",
+                width: 320,
+                height: 240,
+                mode: "callback", //Same procedure as callback, 
+                //onSave is called non-stop, webcam.save() has no effect
                 swffile: "resources/jscam_canvas_only.swf",
-                swffile: "secured/resources/jscam_canvas_only.swf",
-               
                 onSave: saveCB,
                 onCapture: function () {
-          
-                	console.log("Saving");
                         webcam.save();
                 },
                 debug: function (type, string) {
                         console.log(type + ": " + string);
-                }
+                },
+                
+                onLoad: function() {}
+                
         });
 
 });
