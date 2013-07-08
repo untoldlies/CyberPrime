@@ -19,8 +19,6 @@ import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import cyberprime.entities.Sessions;
 import cyberprime.entities.dao.SessionsDAO;
 
-
-
 @WebServlet("/FileTransfer")
 public class FileTransfer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -30,7 +28,7 @@ public class FileTransfer extends HttpServlet {
 	private int maxFileSize = 1000000 * 1000;
 	private File file;
 	private String Id = null;
-	
+
 	public void init() {
 		// Get the file location where it would be stored.
 		filePath = getServletContext().getInitParameter("file-upload");
@@ -54,7 +52,6 @@ public class FileTransfer extends HttpServlet {
 		// Check that we have a file upload request
 		isMultipart = ServletFileUpload.isMultipartContent(request);
 		response.setContentType("text/html");
-
 
 		if (!isMultipart) {
 			out.println("<html>");
@@ -95,60 +92,60 @@ public class FileTransfer extends HttpServlet {
 					FileItem item = iterator.next();
 					if (item.isFormField()) {
 						String fieldName = item.getFieldName();
-						if (fieldName.equalsIgnoreCase("Id")) 
+						if (fieldName.equalsIgnoreCase("Id"))
 							Id = item.getString();
-							Sessions s = new Sessions(null,Id);
-							s = SessionsDAO.searchSessions(s);
-						
-							
-							if(s.getSessionId()== null){
-								System.out.println("something");
-								out.println("<p><strong>Sorry There Is No Such User, Please Try Again</strong></p>");
-								break;
-							}
-							
-							else{
-								System.out.println("User identified");
-								try {
 
-									if (!item.isFormField()) {
-										// Get the uploaded file parameters
+						Sessions s = new Sessions(null, Id);
+						s = SessionsDAO.searchSessions(s);
 
-										String fileName = item.getName();
+						if (!Id.equalsIgnoreCase(s.getClientId())) {
+							out.println("<p>Sorry There, there is an error in the process. Please Try Again.</p>");
+							break;
+						}
+					}
 
-										// Write the file
-										if (fileName.lastIndexOf("\\") >= 0) {
-											file = new File(filePath
-													+ fileName.substring(fileName
-															.lastIndexOf("\\")));
-										} else {
-											file = new File(filePath
-													+ fileName.substring(fileName
-															.lastIndexOf("\\") + 1));
-										}
-										out.println("<p><strong>Thank You For Waiting</strong></p>");
-										item.write(file);
-										out.println("Uploaded Filename: " + fileName
-												+ "<br>");
-										System.out.println("printed");
+					else {
+						if (Id.equals(Id)) {
+							System.out.println("User identified");
+							try {
+
+								if (!item.isFormField()) {
+									// Get the uploaded file parameters
+
+									String fileName = item.getName();
+
+									// Write the file
+									if (fileName.lastIndexOf("\\") >= 0) {
+										file = new File(filePath
+												+ fileName.substring(fileName
+														.lastIndexOf("\\")));
+									} else {
+										file = new File(filePath
+												+ fileName.substring(fileName
+														.lastIndexOf("\\") + 1));
 									}
-
-									out.println("</body>");
-									out.println("</html>");
-									
-								} catch (Exception ex) {
-									out.println("<p><strong>No File Found, Please Try Again</strong></p>");
+									out.println("<p><strong>Thank You For Waiting</strong></p>");
+									item.write(file);
+									out.println("Uploaded Filename: "
+											+ fileName + "<br>");
+									System.out.println("printed");
 								}
-								
+
+								out.println("</body>");
+								out.println("</html>");
+
+							} catch (Exception ex) {
+								out.println("<p><strong>No File Found, Please Try Again</strong></p>");
 							}
-					
+						}
+					}
 				}
 			}
 
-		}
-			} catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
