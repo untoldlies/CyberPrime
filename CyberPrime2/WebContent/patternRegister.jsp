@@ -1,15 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <html>
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Pattern</title>
-<style>
+  <title>template</title>
+  <meta name="description" content="website description" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <!-- modernizr enables HTML5 elements and feature detects -->
+  <script type="text/javascript" src="js/modernizr-1.5.min.js"></script>
+  <style>
 
 div#border{
-width:800px;
-height:600px;
+width:600px;
+height:400px;
 z-index:1;
 }
 
@@ -20,124 +26,124 @@ top:0;
 border-style:solid;
 border-color:black;
 border-width: 1px 0 1px 1px;
-width:100px;
-height:98px;
+width:75px;
+height:65px;
 color:#00FF00;
 text-align:center;
 font-weight:bold;
-font-size:70px;
+font-size:60px;
 cursor:pointer;
 }
 
 div.height1{
 position:relative;
-top:-600px;
-left:100px;
+top:-402px;
+left:75px;
 border-style:solid;
 border-color:black;
 border-width: 1px 0 1px 1px;
-width:100px;
-height:98px;
+width:75px;
+height:65px;
 color:#00FF00;
 text-align:center;
 font-weight:bold;
-font-size:70px;
+font-size:60px;
 cursor:pointer;
 }
 
 div.height2{
 position:relative;
-top:-1200px;
-left:200px;
+top:-804px;
+left:150px;
 border-style:solid;
 border-color:black;
 border-width: 1px 0 1px 1px;
-width:100px;
-height:98px;
+width:75px;
+height:65px;
 color:#00FF00;
 text-align:center;
 font-weight:bold;
-font-size:70px;
+font-size:60px;
 cursor:pointer;
 }
 
 div.height3{
 position:relative;
-top:-1800px;
-left:300px;
+top:-1206px;
+left:225px;
 border-style:solid;
 border-color:black;
 border-width: 1px 0 1px 1px;
-width:100px;
-height:98px;
+width:75px;
+height:65px;
 color:#00FF00;
 text-align:center;
 font-weight:bold;
-font-size:70px;
+font-size:60px;
 cursor:pointer;
 }
 
 div.height4{
 position:relative;
-top:-2400px;
-left:400px;
+top:-1608px;
+left:300px;
 border-style:solid;
 border-color:black;
 border-width: 1px 0 1px 1px;
-width:100px;
-height:98px;
+width:75px;
+height:65px;
 color:#00FF00;
 text-align:center;
 font-weight:bold;
-font-size:70px;
+font-size:60px;
 cursor:pointer;
 }
 
 div.height5{
 position:relative;
-top:-3000px;
-left:500px;
+top:-2010px;
+left:375px;
 border-style:solid;
 border-color:black;
 border-width: 1px 0 1px 1px;
-width:100px;
-height:98px;
+width:75px;
+height:65px;
 color:#00FF00;
 text-align:center;
 font-weight:bold;
-font-size:70px;
+font-size:60px;
 cursor:pointer;
 }
 
 div.height6{
 position:relative;
-top:-3600px;
-left:600px;
+top:-2412px;
+left:450px;
 border-style:solid;
 border-color:black;
 border-width: 1px 0 1px 1px;
-width:100px;
-height:98px;
+width:75px;
+height:65px;
 color:#00FF00;
 text-align:center;
 font-weight:bold;
-font-size:70px;
+font-size:60px;
 cursor:pointer;
 }
 
 div.height7{
 position:relative;
-top:-4200px;
-left:700px;
+top:-2814px;
+left:525px;
 border-style:solid;
 border-color:black;
 border-width: 1px 1px 1px 1px;
-width:100px;
-height:98px;
+width:75px;
+height:65px;
 color:#00FF00;
 text-align:center;
 font-weight:bold;
-font-size:70px;
+font-size:60px;
 cursor:pointer;
 }
 
@@ -174,20 +180,18 @@ div.height7:active{
 background-color:lightgray;
 }
 
-img{
+#img{
 position:absolute;
-top:7px;
-left:7px;
+top:315px;
+left:200;
 z-index:-2;
 }
 
 div#form{
-background-color:lightgray;
 cursor:cursor;
-position:absolute;
+position:relative;
 top:50px;
-right:300px;
-width:200px;
+width:400px;
 height:200px;
 }
 </style>
@@ -230,8 +234,9 @@ function resetPattern(){
 
 </script>
 </head>
+
 <body>
-<%@ page import ="cyberprime.entities.Clients" %>
+      <%@ page import ="cyberprime.entities.Clients" %>
 <%
 session = request.getSession();
 Clients client = (Clients) session.getAttribute("client");
@@ -239,9 +244,46 @@ Clients client = (Clients) session.getAttribute("client");
 
 String image = (String)session.getAttribute("image");
 %>
+  <div id="main">
+    <header>
+      <div id="logo">
+        <div id="logo_text">
+          <!-- class="logo_colour", allows you to change the colour of the text -->
+          <h1><a href="template.jsp">cyber<span class="logo_colour">_Prime</span></a></h1>
+          <h2>Secure, anonymous collaboration.</h2>
+        </div>
+      </div>
+      <nav>
+        <div id="menu_container">
+          <ul class="sf-menu" id="nav">
+            <li><a href="template.jsp">Home</a></li>
+            <li><a href="templateFAQ.jsp">FAQ</a></li>
+            <li><a href="templateRegister.jsp">Register</a></li>
+			<li><a href="templateLogin.jsp">Login</a></li>
+            <li><a href="templateFAQ.jsp#service">Services</a></li>
+           <li><a href="templateAbout.jsp">About Us</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <div id="site_content">
+      <div id="sidebar_container">
+        <div class="sidebar">
+          <h3>Introduction</h3>
+          <h4>Welcome!</h4>
+          <h5>May 9th, 2013</h5>
+          <p>Welcome to Cyber Prime. If it's your first time here, please register with us to use our services.
+		  Otherwise, please login.</p>
+        </div>
+        <div class="sidebar">
+          <h3>Logo</h3>
+          <p><img src="images/cplogosmall.png"></p>
+        </div>
+      </div>
+      <div class="content">
 
-</body>
 <div id="border">
+
 
 <%for(int j=0; j<8; j++){ %>
 <%for(int i=0; i<6;i++){
@@ -249,8 +291,9 @@ String image = (String)session.getAttribute("image");
 	<div class="height<%=j %>" id="<%=j%><%=i%>" onclick="doSomething('<%=j%><%=i%>');"></div>
 	<%} %>
 <% }%>
+
 </div>
-<img alt="<%=image%>" src="loginImages/<%=image%>"width="800" height="600">
+<img alt="<%=image%>" id="img" src="loginImages/<%=image%>"width="600" height="400">
 <div id="form">
 <form method ="post" action="${pageContext.request.contextPath}/Register">
 Choose a pattern for your password.
@@ -261,5 +304,23 @@ Choose a pattern for your password.
 </form>
 ${regResult}
 </div>
-<div id="something"></div>
+      </div>
+    </div>
+    <footer>
+      <p>Cyber Prime | Created May 2013 | Secure, anonymous collaboration.</a></p>
+    </footer>
+  </div>
+  <p>&nbsp;</p>
+  <!-- javascript at the bottom for fast page loading -->
+  <script type="text/javascript" src="js/jquery.js"></script>
+  <script type="text/javascript" src="js/jquery.easing-sooper.js"></script>
+  <script type="text/javascript" src="js/jquery.sooperfish.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('ul.sf-menu').sooperfish();
+    });
+  </script>
+</body>
+</html>
+
 </html>

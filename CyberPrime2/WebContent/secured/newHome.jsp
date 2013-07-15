@@ -28,7 +28,7 @@ $(document).ready(function(){
 });
 
 function changePage(src) {
-    $("#content").load(src);
+   document.getElementById("content").src = src;
 }
 
 </script>
@@ -51,10 +51,10 @@ Clients client = (Clients) session.getAttribute("c");
 			
 <ul class="tabsContent">
 <li class="tabs" onclick="changePage();">home</li>
-<li class="tabs" onclick="changePage('secured/video.jsp');changePage('video.jsp');">web browsing</li>
-<li class="tabs" onclick="changePage('secured/fileTransfer.jsp');changePage('fileTransfer.jsp');">file transfer</li>
-<li class="tabs" onclick="changePage('secured/chat.jsp');changePage('chat.jsp');">chat</li>
-<li class="tabs" onclick="changePage('secured/conference.jsp');changePage('conference.jsp');">video conference</li>
+<li class="tabs" onclick="changePage('secured/video.jsp');">web browsing</li>
+<li class="tabs" onclick="changePage('secured/fileTransfer.jsp');">file transfer</li>
+<li class="tabs" onclick="changePage('secured/chat.jsp');">chat</li>
+<li class="tabs" onclick="changePage('secured/conference.jsp');">video conference</li>
 </ul>
 
 </div>
@@ -80,8 +80,9 @@ Clients client = (Clients) session.getAttribute("c");
 <li class="rightmenu" id="notificationsTab">Notifications</li>
 </ul>
 	<div id="users">
-	<input type="text" id="username"><input type="button" id="add" value="add" onclick="addUser();"/>
-	
+	<form method="post" action="${pageContext.request.contextPath}/AddUsers">
+	<input type="text" name="username" id="username"><input type="submit" id="add" value="add" onclick="addUser();"/>
+	</form>
 	<div id="usernames">
 	</div>
 	
@@ -90,7 +91,7 @@ Clients client = (Clients) session.getAttribute("c");
 	<div id="background"></div>
 	
 	<div id="contentFrame">
-		<div id="content"></div>
+		<iframe id="content"></iframe>
 	</div>
 
 			<div id = "notifications">

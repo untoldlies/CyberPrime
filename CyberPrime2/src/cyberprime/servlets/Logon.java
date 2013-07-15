@@ -52,7 +52,7 @@ public class Logon extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
-		String repos = "C:\\Users\\Tan Wai Kit\\Desktop\\CyberPrime\\CyberPrime2\\WebContent\\loginImages\\";
+		String repos = "C:\\Users\\Deane\\git\\CyberPrime2\\CyberPrime2\\WebContent\\loginImages\\";
 		Clients client = new Clients();
 		ImageEncryption en = null;
 		File repo = new File(repos);

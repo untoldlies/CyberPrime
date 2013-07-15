@@ -1,55 +1,43 @@
 package cyberprime.servlets;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import cyberprime.entities.Clients;
-import cyberprime.entities.Sessions;
-import cyberprime.entities.dao.SessionsDAO;
 
 /**
- * Servlet implementation class Logout
+ * Servlet implementation class StartUp
  */
-//@WebServlet("/Logout")
-public class Logout extends HttpServlet {
+@WebServlet("/StartUp")
+public class StartUp extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Logout() {
+    public StartUp() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request,response);
+		Set sess = Collections.synchronizedSet(new HashSet());
+		getServletContext().setAttribute("cyberprime.sessions", sess);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		Clients client = (Clients)session.getAttribute("c");
-		try{
-			Sessions s = new Sessions(session.getId(), client.getUserId());
-			s = SessionsDAO.deleteSession(s);
-			session.removeAttribute("c");
-			session.invalidate();
-			response.sendRedirect("template.jsp");
-		}catch(Exception e){
-			//error checking
-		}
+		// TODO Auto-generated method stub
 	}
 
 }

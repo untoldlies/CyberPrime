@@ -65,7 +65,7 @@
 		 <!--Auto detect IP address-->
          <p>Please specify an image file as a password: <br/><input type="file" name="image"></p>
 <!-- 		 <p>Please specify a second image file as a honeypot password (optional): <br/><input type="file" name="datafile" size="40"></p> -->
-		 <p>Email: <br/><input type="text" name="email"required /></p>
+		 <p>Email: <br/><input type="text" name="email"required autocomplete="off"/></p>
          <div>
          <input type="submit" value="Send">
          </div>

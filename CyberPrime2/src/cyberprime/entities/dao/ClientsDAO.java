@@ -69,7 +69,7 @@ public class ClientsDAO {
 				client.setImageExtension(rs.getString(3));
 				client.setUserId(rs.getString(4));
 				client.setEmail(rs.getString(5));
-				client.setPattern(rs.getString(6));
+				client.setDBPattern(rs.getString(6));
 			}
 
 		}catch(Exception ex){

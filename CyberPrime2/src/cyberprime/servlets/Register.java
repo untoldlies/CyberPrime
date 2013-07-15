@@ -1,6 +1,7 @@
 package cyberprime.servlets;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -44,7 +45,11 @@ public class Register extends HttpServlet {
 		String pattern = (String)request.getParameter("pattern");
 		if(pattern.length() != 0){
 			
-			client.setPattern(pattern);
+			try {
+				client.setPattern(pattern);
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		else{
