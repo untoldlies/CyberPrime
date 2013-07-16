@@ -1,5 +1,9 @@
 package cyberprime.entities;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 
 public class Clients {
 	
@@ -59,8 +63,20 @@ public class Clients {
 	public String getPattern() {
 		return pattern;
 	}
-	public void setPattern(String pattern) {
+	
+	public void setDBPattern(String pattern){
 		this.pattern = pattern;
+	}
+	public void setPattern(String pattern) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+		this.pattern = getHash(pattern,this.userId);
+	}
+	
+	public static String getHash(String pattern,String salt) throws NoSuchAlgorithmException{
+		
+		pattern += salt;
+		MessageDigest hash = MessageDigest.getInstance("SHA-512");
+		hash.update(pattern.getBytes());
+		return new String(hash.digest());
 	}
 	
 	

@@ -108,10 +108,11 @@ body{
 	display:none;
 	background-color: rgba(192,192,192,0.7);
 	width:200px;
-	height:200px;
+	max-height:300px;
+	overflow:auto;
 	position:absolute;
 	top:50px;
-	right:95px;
+	right:110px;
 	float:right;
 	padding:19px 8px;
 	border-style:solid;
@@ -120,6 +121,8 @@ body{
 	border-top-width:0px;
 	z-index:1;
 }
+
+
 
 #users{
 	display:none;

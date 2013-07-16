@@ -27,12 +27,17 @@ body{
 }
 
 </style>
+<%@ page import ="cyberprime.entities.Clients" %>
+<%
+session = request.getSession();
+Clients client = (Clients) session.getAttribute("c");
+%>
 <script>
 
-function postMessage()  {
+function postMessage(user)  {
 	
 	var input = document.getElementById('inputMessage').value; // save the object
-	var userName = "Username said:";
+	var userName = user+" said:";
 	var timestamp = new Date();
 	var conMessage = userName + " " + input + " (" + timestamp + ")";
 	var p = document.createElement('p');
@@ -43,6 +48,7 @@ function postMessage()  {
 }
 
 </script>
+
 <body>
 <div id="chat">
 <h2>Chat</h2>
@@ -54,7 +60,7 @@ function postMessage()  {
 
 <textarea id="inputMessage" rows="2" cols="100" style="resize:none" placeholder="Enter your message here.">
 </textarea>
-<input id="postMessage" type="button" value="Post" onclick="postMessage();">
+<input id="postMessage" type="button" value="Post" onclick="postMessage('<%=client.getUserId() %>');">
 
 
 </div>

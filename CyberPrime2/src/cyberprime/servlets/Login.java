@@ -1,6 +1,11 @@
 package cyberprime.servlets;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
+import java.security.NoSuchAlgorithmException;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,7 +16,6 @@ import javax.servlet.http.HttpSession;
 import cyberprime.entities.Clients;
 import cyberprime.entities.Sessions;
 import cyberprime.entities.dao.ClientsDAO;
-import cyberprime.entities.dao.SessionsDAO;
 
 /**
  * Servlet implementation class Login
@@ -45,9 +49,26 @@ public class Login extends HttpServlet {
 		Clients client = (Clients) session.getAttribute("client");
 		String pattern = (String)request.getParameter("pattern");
 		
+		Clients c = ClientsDAO.retrieveClient(client);
+		if(c == null){
+			
+			Object obj = new Object();
+			obj = "<p style='color:red'>*There is no user registered with the image uploaded</p>";
+			request.setAttribute("loginResult", obj);
+			request.getRequestDispatcher("templateLogin.jsp").forward(request, response);
+			
+			}
+		
+		else if(c != null){
+			
+		client.setUserId(c.getUserId());	
 		if(pattern.length() != 0){
 			
-			client.setPattern(pattern);
+			try {
+				client.setPattern(pattern);
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		else{
@@ -58,22 +79,16 @@ public class Login extends HttpServlet {
 			return;
 		}
 		
-		Clients c = ClientsDAO.retrieveClient(client);
-		if(c == null){
-			
-			Object obj = new Object();
-			obj = "<p style='color:red'>*There is no user registered with the image uploaded</p>";
-			request.setAttribute("loginResult", obj);
-			request.getRequestDispatcher("templateLogins.jsp").forward(request, response);
-			
-			}
-		
-		else if(c != null){
-			
 			if(client.getImageHash().equals(c.getImageHash()) && client.getPattern().equals(c.getPattern())){
 				Sessions s = new Sessions(session.getId(),c.getUserId());
-				s = SessionsDAO.createSession(s);
+//				s = SessionsDAO.createSession(s);
+//				Set sess = Collections.synchronizedSet(new HashSet());
+//				getServletContext().setAttribute("cyberprime.sessions", sess);
+				//WeakReference sessionRef = new WeakReference(s);
+				Set sessions = (Set)getServletContext().getAttribute("cyberprime.sessions");
+				sessions.add(s);
 				session.setAttribute("c", c);
+				//session.setMaxInactiveInterval(10);
 				request.getRequestDispatcher("secured/newHome.jsp").forward(request, response);
 			}	
 			

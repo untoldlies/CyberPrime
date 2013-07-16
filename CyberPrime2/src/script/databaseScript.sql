@@ -16,12 +16,12 @@ CREATE TABLE `client` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
 
 
-CREATE TABLE `sessions` (
-  `sessionid` varchar(255) NOT NULL,
-  `clientid` varchar(255) NOT NULL,
-  PRIMARY KEY (`sessionid`),
-  UNIQUE KEY `clientid_UNIQUE` (`clientid`)
+CREATE TABLE `notifications` (
+  `sender` varchar(255) NOT NULL,
+  `receiver` varchar(255) NOT NULL,
+  `content` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1$$
+
 
 
 

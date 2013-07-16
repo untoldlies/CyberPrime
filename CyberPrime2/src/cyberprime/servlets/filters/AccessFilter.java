@@ -39,7 +39,7 @@ public class AccessFilter implements Filter {
 		chain.doFilter(request, response);
 		}
 		else{
-			((HttpServletResponse)response).sendRedirect("../chat.jsp");
+			((HttpServletResponse)response).sendRedirect("../templateLogin.jsp");
 		}
 	}
 
