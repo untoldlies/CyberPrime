@@ -3,12 +3,14 @@ package cyberprime.servlets;
 import java.io.File;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.RequestContext;
@@ -16,8 +18,10 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.servlet.ServletRequestContext;
 
+import com.sun.security.ntlm.Client;
+
+import cyberprime.entities.Clients;
 import cyberprime.entities.Sessions;
-import cyberprime.entities.dao.SessionsDAO;
 
 @WebServlet("/FileTransfer")
 public class FileTransfer extends HttpServlet {
@@ -37,6 +41,9 @@ public class FileTransfer extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, java.io.IOException {
 
+		HttpSession session = request.getSession();
+		Clients client = (Clients) session.getAttribute("c");
+		
 		java.io.PrintWriter out = response.getWriter();
 		File repo = new File("D:\\Temp\\files\\");
 		DiskFileItemFactory factory = new DiskFileItemFactory();
@@ -88,58 +95,61 @@ public class FileTransfer extends HttpServlet {
 				// Process the uploaded file items
 				Iterator<FileItem> iterator = items.iterator();
 
+				Set sessions = (Set) getServletContext().getAttribute(
+						"cyberprime.sessions");
+				Iterator sessionIt = sessions.iterator();
+
 				while (iterator.hasNext()) {
 					FileItem item = iterator.next();
 					if (item.isFormField()) {
 						String fieldName = item.getFieldName();
 						if (fieldName.equalsIgnoreCase("Id"))
 							Id = item.getString();
-
-						Sessions s = new Sessions(null, Id);
-						s = SessionsDAO.searchSessions(s);
-
-						if (!Id.equalsIgnoreCase(s.getClientId())) {
-							out.println("<p>Sorry There, there is an error in the process. Please Try Again.</p>");
-							break;
-						}
 					}
 
 					else {
-						if (Id.equals(Id)) {
-							System.out.println("User identified");
-							try {
 
-								if (!item.isFormField()) {
-									// Get the uploaded file parameters
+						while (sessionIt.hasNext()) {
+							Sessions sess = (Sessions) sessionIt.next();
+							if (!Id.equalsIgnoreCase(sess.getClientId()) || !sess.getClientId().equalsIgnoreCase(client.getUserId())) {
+								out.println("<p>Sorry There, there is an error in the process. Please Try Again.</p>");
+								break;
+							}
 
-									String fileName = item.getName();
+							else {
+								// Get the uploaded file parameters
 
-									// Write the file
-									if (fileName.lastIndexOf("\\") >= 0) {
-										file = new File(filePath
-												+ fileName.substring(fileName
-														.lastIndexOf("\\")));
-									} else {
-										file = new File(filePath
-												+ fileName.substring(fileName
-														.lastIndexOf("\\") + 1));
-									}
-									out.println("<p><strong>Thank You For Waiting</strong></p>");
-									item.write(file);
-									out.println("Uploaded Filename: "
-											+ fileName + "<br>");
-									System.out.println("printed");
+								try{
+									
+								String fileName = item.getName();
+								// Write the file
+								if (fileName.lastIndexOf("\\") >= 0) {
+									file = new File(filePath
+											+ fileName.substring(fileName
+													.lastIndexOf("\\")));
+								} else {
+									file = new File(filePath
+											+ fileName.substring(fileName
+													.lastIndexOf("\\") + 1));
+								out.println("<p><strong>Thank You For Waiting</strong></p>");
+								item.write(file);
+								out.println("Uploaded Filename: " + fileName
+										+ "<br>");
 								}
-
 								out.println("</body>");
 								out.println("</html>");
+								
+								}catch(Exception ex){
+									out.println("<p><strong>No file found, please try again</strong></p>");
+								}
 
-							} catch (Exception ex) {
-								out.println("<p><strong>No File Found, Please Try Again</strong></p>");
 							}
 						}
+
 					}
+
 				}
+
 			}
 
 		} catch (Exception e) {
@@ -147,12 +157,12 @@ public class FileTransfer extends HttpServlet {
 		}
 	}
 
-	public Object notifications(){
+	public Object notifications() {
 		Object postNotifications = null;
-		
+
 		return postNotifications;
 	}
-	
+
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, java.io.IOException {
 
