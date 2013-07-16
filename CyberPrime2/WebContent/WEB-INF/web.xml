@@ -51,6 +51,15 @@
     <url-pattern>/Logout</url-pattern>
   </servlet-mapping>
   
+      <servlet>
+    <servlet-name>AddUsers</servlet-name>
+    <servlet-class>cyberprime.servlets.AddUsers</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddUsers</servlet-name>
+    <url-pattern>/AddUsers</url-pattern>
+  </servlet-mapping>
+  
   <servlet>
     <display-name>FileTransfer</display-name>
     <servlet-name>FileTransfer</servlet-name>

@@ -55,7 +55,7 @@ public class Registration extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String repos = Constants.DEANE_PATH;
+		String repos = Constants.WAIKIT_PATH;
 		Clients client = new Clients();
 		ImageEncryption en = null;
 		File repo = new File(repos);

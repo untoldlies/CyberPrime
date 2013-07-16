@@ -30,7 +30,9 @@ $(document).ready(function(){
 
 		$.get("AddUsers", { username: username});
 		
-		username = "";
+		document.getElementById('username').value = "";
+		
+		$("#notifications").slideToggle("slow");
 	});
 
 

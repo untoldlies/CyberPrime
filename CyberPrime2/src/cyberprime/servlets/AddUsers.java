@@ -40,6 +40,7 @@ public class AddUsers extends HttpServlet {
 		HttpSession sess = request.getSession();
 		Clients client = (Clients)sess.getAttribute("c");
 		Notifications n = new Notifications(client.getUserId(),username,"AddUser");
+		System.out.println(n.getSender()+" "+n.getReceiver());
 		NotificationsDAO.createNotification(n);
 	}
 

@@ -18,10 +18,10 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.servlet.ServletRequestContext;
 
-import com.sun.security.ntlm.Client;
-
 import cyberprime.entities.Clients;
+import cyberprime.entities.Notifications;
 import cyberprime.entities.Sessions;
+import cyberprime.entities.dao.NotificationsDAO;
 
 @WebServlet("/FileTransfer")
 public class FileTransfer extends HttpServlet {
@@ -111,16 +111,17 @@ public class FileTransfer extends HttpServlet {
 
 						while (sessionIt.hasNext()) {
 							Sessions sess = (Sessions) sessionIt.next();
-							if (!Id.equalsIgnoreCase(sess.getClientId()) || !sess.getClientId().equalsIgnoreCase(client.getUserId())) {
-								out.println("<p>Sorry There, there is an error in the process. Please Try Again.</p>");
+							if (!Id.equalsIgnoreCase(sess.getClientId())) {
 								break;
 							}
 
 							else {
 								// Get the uploaded file parameters
-
+								
+								Notifications n = new Notifications(client.getUserId(),sess.getClientId(),"FileTransfer");
+								
 								try{
-									
+								NotificationsDAO.createNotification(n);	
 								String fileName = item.getName();
 								// Write the file
 								if (fileName.lastIndexOf("\\") >= 0) {
@@ -144,6 +145,11 @@ public class FileTransfer extends HttpServlet {
 								}
 
 							}
+						}
+						
+						if(file.getAbsolutePath().length()==0){
+							
+							out.println("<p>Sorry There, there is an error in the process. Please Try Again.</p>");
 						}
 
 					}
