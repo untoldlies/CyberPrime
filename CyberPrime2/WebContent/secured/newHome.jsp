@@ -31,6 +31,18 @@ function changePage(src) {
     $("#content").load(src);
 }
 
+/* function checkNotifications(){
+$.ajax({
+url:"CyberPrime2/cyberprime.servlets/FileTransfer.java",
+type:"GET",
+success: function(notification){
+//check for notifications
+},
+error: function(data){
+//error handling
+}
+});
+} */
 </script>
 
 <link rel="stylesheet" type="text/css" href="../css/newHome.css"/>

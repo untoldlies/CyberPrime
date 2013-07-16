@@ -145,9 +145,14 @@ public class FileTransfer extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 
+	public Object notifications(){
+		Object postNotifications = null;
+		
+		return postNotifications;
+	}
+	
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, java.io.IOException {
 

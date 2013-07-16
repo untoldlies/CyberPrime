@@ -15,34 +15,33 @@ body {
 	height: 570px;
 	background-color: grey;
 }
+
+.center {
+	padding: 5% 5% 5% 5%;
+	border-color: black;
+}
 </style>
+
 <title>File Upload</title>
 </head>
 <body>
-<%@ page import ="cyberprime.entities.Clients" %>
-<%
-session = request.getSession();
-Clients client = (Clients) session.getAttribute("c");
-%>
+	<%@ page import="cyberprime.entities.Clients"%>
+	<%
+		session = request.getSession();
+		Clients client = (Clients) session.getAttribute("c");
+	%>
 	<div class="main">
 		<center class="center">
 			<h3>Please upload your files that you want to transfer to:</h3>
 			<!-- action should change back to servletUpload -->
-			<form action="${pageContext.request.contextPath}/FileTransfer" method="post"
-				enctype="multipart/form-data">
-					<strong>Now please type in the person's ID that you want to transfer your file to:</strong> 
-				<input type="text" name="Id" class="calc-input" maxlength="25"
-					onChange="valueChange('0');">
+			<form action="${pageContext.request.contextPath}/FileTransfer"
+				method="post" enctype="multipart/form-data">
+				<strong>Now please type in the person's ID that you want to
+					transfer your file to:</strong> <input type="text" name="Id"
+					class="calc-input" maxlength="25" onChange="valueChange('0');">
 
-				</br> 
-				</br> 
-				</br> 
-				</br> 
-				</br> 
-				</br> 
-								<input type="file" name="file" size="10000000" /> <br /> 
- </br> <input type="submit"
-					value="Upload File" />
+				</br> </br> </br> </br> </br> </br> <input type="file" name="file" size="10000000" /> <br /> </br> <input
+					type="submit" value="Upload File" />
 			</form>
 		</center>
 	</div>
