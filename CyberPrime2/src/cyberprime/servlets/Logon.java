@@ -20,6 +20,7 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletRequestContext;
 
 import cyberprime.entities.Clients;
 import cyberprime.entities.dao.ClientsDAO;
+import cyberprime.util.Constants;
 import cyberprime.util.ImageEncryption;
 import cyberprime.util.ImageValidator;
 
@@ -52,7 +53,7 @@ public class Logon extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
-		String repos = "C:\\Users\\Deane\\git\\CyberPrime2\\CyberPrime2\\WebContent\\loginImages\\";
+		String repos = Constants.DEANE_PATH;
 		Clients client = new Clients();
 		ImageEncryption en = null;
 		File repo = new File(repos);

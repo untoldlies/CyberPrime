@@ -82,10 +82,11 @@ public class Login extends HttpServlet {
 			if(client.getImageHash().equals(c.getImageHash()) && client.getPattern().equals(c.getPattern())){
 				Sessions s = new Sessions(session.getId(),c.getUserId());
 //				s = SessionsDAO.createSession(s);
-
-				WeakReference sessionRef = new WeakReference(s);
+//				Set sess = Collections.synchronizedSet(new HashSet());
+//				getServletContext().setAttribute("cyberprime.sessions", sess);
+				//WeakReference sessionRef = new WeakReference(s);
 				Set sessions = (Set)getServletContext().getAttribute("cyberprime.sessions");
-				sessions.add(sessionRef);
+				sessions.add(s);
 				session.setAttribute("c", c);
 				//session.setMaxInactiveInterval(10);
 				request.getRequestDispatcher("secured/newHome.jsp").forward(request, response);

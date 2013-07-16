@@ -1,8 +1,6 @@
 package cyberprime.servlets;
 
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,19 +9,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import cyberprime.entities.Clients;
-import cyberprime.entities.Sessions;
+import cyberprime.entities.Notifications;
+import cyberprime.entities.dao.NotificationsDAO;
 
 /**
- * Servlet implementation class Logout
+ * Servlet implementation class AddUsers
  */
-//@WebServlet("/Logout")
-public class Logout extends HttpServlet {
+//@WebServlet("/AddUsers")
+public class AddUsers extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Logout() {
+    public AddUsers() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,35 +31,26 @@ public class Logout extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request,response);
+		
+		response.setContentType("text/xml");
+	    response.setHeader("Cache-Control", "no-cache");
+	    
+		String username = request.getParameter("username");
+		System.out.println(username);
+		HttpSession sess = request.getSession();
+		Clients client = (Clients)sess.getAttribute("c");
+		Notifications n = new Notifications(client.getUserId(),username,"AddUser");
+		NotificationsDAO.createNotification(n);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		Clients client = (Clients)session.getAttribute("c");
 
-			Sessions s = new Sessions(session.getId(), client.getUserId());
-			//s = SessionsDAO.deleteSession(s);
-			Set sessions = (Set) getServletContext().getAttribute("cyberprime.sessions");
-			Iterator sessionIt = sessions.iterator();
-					while(sessionIt.hasNext()) {
-					Sessions sess = (Sessions)sessionIt.next();
-					System.out.println("Client id ="+sess.getClientId());
-					if(sess.getSessionId().equals(session.getId())){
-						sessionIt.remove();
-						sessions.remove(sess);
-					}
-					
 
-					}
 
 		
-		session.removeAttribute("c");
-		session.invalidate();
-		response.sendRedirect("template.jsp");
 	}
 
 }

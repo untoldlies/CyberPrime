@@ -6,8 +6,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Homepage</title>
 <!-- comment to commit -->
-<script src="../js/newHome.js"></script>
-<script src="js/newHome.js"></script>
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script> 
@@ -23,15 +21,54 @@ $(document).ready(function(){
 	$('.tabs').click(function(){
 		$('.moving_bg').animate($(this).position(),'medium');
 	});
+	
+	$("#add").click(function(){
+		
+		var username = document.getElementById('username').value;
+		
+		$.ajaxSetup({ cache: false});
+
+		$.get("AddUsers", { username: username});
+		
+		username = "";
+	});
 
 
 });
+
+
+
+function removeUser(){
+
+	$(this).closest('.userCont').animate({
+		height: 0}, 500,function(){
+			$(this).remove();
+		});
+
+	}
+
 
 function changePage(src) {
    document.getElementById("content").src = src;
 }
 
 </script>
+
+<script>
+
+var url = 'GetNotifications';
+
+$(document).ready(function() {
+
+$.ajaxSetup({ cache: false }); 
+
+setInterval(function() {$("#notifications").load(url); }, 1000);
+
+});
+</script>
+
+
+
 
 <link rel="stylesheet" type="text/css" href="../css/newHome.css"/>
 <link rel="stylesheet" type="text/css" href="css/newHome.css"/>
@@ -80,9 +117,7 @@ Clients client = (Clients) session.getAttribute("c");
 <li class="rightmenu" id="notificationsTab">Notifications</li>
 </ul>
 	<div id="users">
-	<form method="post" action="${pageContext.request.contextPath}/AddUsers">
-	<input type="text" name="username" id="username"><input type="submit" id="add" value="add" onclick="addUser();"/>
-	</form>
+	<input type="text" name="username" id="username" autocomplete="off"><input type="submit" id="add" value="add"/>
 	<div id="usernames">
 	</div>
 	
@@ -95,8 +130,8 @@ Clients client = (Clients) session.getAttribute("c");
 	</div>
 
 			<div id = "notifications">
-				<div id="jgrowl-notifications"></div>
-		<p><br><br>All notifications here</p>
+			
+
 			</div>
 
 </div>

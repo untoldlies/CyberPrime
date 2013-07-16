@@ -1,6 +1,7 @@
 package cyberprime.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -31,6 +32,17 @@ public class StartUp extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Set sess = Collections.synchronizedSet(new HashSet());
 		getServletContext().setAttribute("cyberprime.sessions", sess);
+		response.setContentType("text/xml");
+	    response.setHeader("Cache-Control", "no-cache");
+
+	     PrintWriter writer = response.getWriter();
+	     
+		    String html="<h1>You have officially started your server</h1>";
+		    
+
+		      writer.println(html);
+
+		      writer.close();     
 	}
 
 	/**
