@@ -50,11 +50,12 @@ Clients client = (Clients) session.getAttribute("c");
 			</div>	
 			
 <ul class="tabsContent">
-<li class="tabs" onclick="changePage();">home</li>
+<li class="tabs" onclick="changePage('secured/firstPage.jsp');">home</li>
 <li class="tabs" onclick="changePage('secured/video.jsp');">web browsing</li>
 <li class="tabs" onclick="changePage('secured/fileTransfer.jsp');">file transfer</li>
 <li class="tabs" onclick="changePage('secured/chat.jsp');">chat</li>
 <li class="tabs" onclick="changePage('secured/conference.jsp');">video conference</li>
+<li class="tabs"><img src="images/cpicon.png"></img></li>
 </ul>
 
 </div>
