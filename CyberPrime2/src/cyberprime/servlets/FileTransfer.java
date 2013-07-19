@@ -41,6 +41,7 @@ public class FileTransfer extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, java.io.IOException {
 
+
 		HttpSession session = request.getSession();
 		Clients client = (Clients) session.getAttribute("c");
 		
@@ -95,8 +96,7 @@ public class FileTransfer extends HttpServlet {
 				// Process the uploaded file items
 				Iterator<FileItem> iterator = items.iterator();
 
-				Set sessions = (Set) getServletContext().getAttribute(
-						"cyberprime.sessions");
+				Set sessions = (Set) getServletContext().getAttribute("cyberprime.sessions");
 				Iterator sessionIt = sessions.iterator();
 
 				while (iterator.hasNext()) {
@@ -111,11 +111,9 @@ public class FileTransfer extends HttpServlet {
 
 						while (sessionIt.hasNext()) {
 							Sessions sess = (Sessions) sessionIt.next();
-							if (!Id.equalsIgnoreCase(sess.getClientId())) {
-								break;
-							}
 
-							else {
+							if (Id.equalsIgnoreCase(sess.getClientId())) {
+								System.out.println("Sessions "+sess.getClientId());
 								// Get the uploaded file parameters
 								
 								Notifications n = new Notifications(client.getUserId(),sess.getClientId(),"FileTransfer");
@@ -141,16 +139,26 @@ public class FileTransfer extends HttpServlet {
 								out.println("</html>");
 								
 								}catch(Exception ex){
-									out.println("<p><strong>No file found, please try again</strong></p>");
+									out.print("<p><strong>No file found, please try again</strong></p>");
 								}
-
+								return;
 							}
-						}
-						
-						if(file.getAbsolutePath().length()==0){
 							
-							out.println("<p>Sorry There, there is an error in the process. Please Try Again.</p>");
-						}
+							else{
+
+								if(Id.isEmpty()){
+									out.println("<p><strong>Please enter a username</strong></p>");
+									out.println("</body>");
+									out.println("</html>");
+									return;
+								}
+								
+								else{
+									out.println("<p><strong>Please put a a valid ID</strong></p>");
+									out.println("</body>");
+									out.println("</html>");
+								}
+							}
 
 					}
 
@@ -158,7 +166,8 @@ public class FileTransfer extends HttpServlet {
 
 			}
 
-		} catch (Exception e) {
+		}
+	}catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

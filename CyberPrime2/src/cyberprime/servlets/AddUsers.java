@@ -1,6 +1,8 @@
 package cyberprime.servlets;
 
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import cyberprime.entities.Clients;
 import cyberprime.entities.Notifications;
+import cyberprime.entities.Sessions;
 import cyberprime.entities.dao.NotificationsDAO;
 
 /**
@@ -34,14 +37,29 @@ public class AddUsers extends HttpServlet {
 		
 		response.setContentType("text/xml");
 	    response.setHeader("Cache-Control", "no-cache");
-	    
+
 		String username = request.getParameter("username");
-		System.out.println(username);
 		HttpSession sess = request.getSession();
 		Clients client = (Clients)sess.getAttribute("c");
 		Notifications n = new Notifications(client.getUserId(),username,"AddUser");
-		System.out.println(n.getSender()+" "+n.getReceiver());
-		NotificationsDAO.createNotification(n);
+	
+	    // Check for online users before creating notifications
+		Set sessions = (Set) getServletContext().getAttribute("cyberprime.sessions");
+		Iterator sessionIt = sessions.iterator();
+		
+		while(sessionIt.hasNext()){
+			Sessions sex = (Sessions) sessionIt.next();
+			if (sex.getClientId().equalsIgnoreCase(username)){
+				NotificationsDAO.createNotification(n);
+				return;
+			}
+			
+			else{
+				// give feedback
+				
+			}
+			
+		}
 	}
 
 	/**

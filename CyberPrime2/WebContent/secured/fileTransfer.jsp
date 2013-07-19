@@ -39,6 +39,7 @@ body {
 				<strong>Now please type in the person's ID that you want to
 					transfer your file to:</strong> <input type="text" name="Id"
 					class="calc-input" maxlength="25" onChange="valueChange('0');">
+					${ftResult}
 
 				</br> </br> </br> </br> </br> </br> <input type="file" name="file" size="10000000" /> <br /> </br> <input
 					type="submit" value="Upload File" />
