@@ -65,6 +65,13 @@
     <servlet-name>FileTransfer</servlet-name>
     <servlet-class>cyberprime.servlets.FileTransfer</servlet-class>
   </servlet>
+  
+  <listener>
+	<listener-class>
+	org.apache.commons.fileupload.servlet.FileCleanerCleanup
+	</listener-class>
+	</listener>
+  
   <filter>
     <filter-name>AccessFilter</filter-name>
     <filter-class>cyberprime.servlets.filters.AccessFilter</filter-class>

@@ -147,11 +147,34 @@ private static DBController db = new DBController();
 		
 	}
 
+	public static void deleteNotifications(){
+		Connection currentCon = db.getConnection();
+		
+		try{
+			String query = "delete from notifications";
+			PreparedStatement pstmt = currentCon.prepareStatement(query);
+
+			pstmt.executeUpdate();
+		}catch(Exception ex){
+			System.out.println("Delete failed: An Exception has occurred! "+ ex);
+		}		
+		finally {
+
+			if (currentCon != null) {
+				try {
+					currentCon.close();
+				} catch (Exception e) {
+				}
+
+				currentCon = null;
+			}
+		}
+		
+		
+	}
 	
 	public static void main(String args[]){
 		
-		Notifications n = new Notifications("d519057d99d0ig4g9i8e","879hg9601513h0g6g9ce","AddUser");
-		NotificationsDAO.deleteNotification(n);
 	}
 
 }
