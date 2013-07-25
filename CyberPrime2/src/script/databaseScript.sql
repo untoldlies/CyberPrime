@@ -9,7 +9,9 @@ CREATE TABLE `client` (
   `imageExtension` varchar(45) NOT NULL,
   `userId` varchar(255) NOT NULL,
   `email` varchar(45) NOT NULL,
-  `pattern` varchar(45) NOT NULL,
+  `pattern` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `activation` varchar(45) NOT NULL,
   PRIMARY KEY (`imageHash`),
   UNIQUE KEY `userId_UNIQUE` (`userId`),
   UNIQUE KEY `email_UNIQUE` (`email`)

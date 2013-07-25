@@ -11,6 +11,9 @@ import javax.servlet.http.HttpSession;
 
 import cyberprime.entities.Clients;
 import cyberprime.entities.dao.ClientsDAO;
+import cyberprime.util.Algorithms;
+import cyberprime.util.EmailSender;
+import cyberprime.util.FileMethods;
 
 
 /**
@@ -42,6 +45,8 @@ public class Register extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		Clients client = (Clients) session.getAttribute("client");
+		String image = (String)session.getAttribute("image");
+		System.out.println(image);
 		String pattern = (String)request.getParameter("pattern");
 		if(pattern.length() != 0){
 			
@@ -59,12 +64,27 @@ public class Register extends HttpServlet {
 			request.getRequestDispatcher("pattern.jsp").forward(request, response);
 			return;
 		}
-		
+		client.setActivation("Pending");
+		client.setToken();
+		String token = client.getToken();
+		String tokenHash = "";
+		try {
+			tokenHash = Algorithms.encrypt(token,client.getUserId().substring(0, 15));
+			client.setToken(tokenHash);
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		Clients c = ClientsDAO.registerClient(client);
-		
+		EmailSender email = new EmailSender(client);
+		email.sendActivationLink(token);
 		if(c!=null){
+			session.removeAttribute("image");
+			session.removeAttribute("client");
+			FileMethods.fileDelete(image);
 			Object obj = new Object();
-			obj = "<p style='color:lime'>*You have successfully registered with us!</p>";
+			obj = "<p style='color:lime'>*You have successfully registered with us! We have sent you an activation link to your email.</p>";
 			request.setAttribute("regResult", obj);
 			request.getRequestDispatcher("templateLogin.jsp").forward(request, response);
 		}	

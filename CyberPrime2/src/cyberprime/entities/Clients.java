@@ -3,6 +3,9 @@ package cyberprime.entities;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.UUID;
+
+import cyberprime.util.Algorithms;
 
 
 public class Clients {
@@ -13,6 +16,8 @@ public class Clients {
 	private String imageExtension;
 	private String email;
 	private String pattern;
+	private String token;
+	private String activation;
 	
 	
 	public Clients(){
@@ -68,15 +73,27 @@ public class Clients {
 		this.pattern = pattern;
 	}
 	public void setPattern(String pattern) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-		this.pattern = getHash(pattern,this.userId);
+		this.pattern = Algorithms.getHash(pattern,this.userId);
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken() {
+		this.token =  UUID.randomUUID().toString();
+	}
+
+	public void setToken (String token){
+		this.token = token;
 	}
 	
-	public static String getHash(String pattern,String salt) throws NoSuchAlgorithmException{
-		
-		pattern += salt;
-		MessageDigest hash = MessageDigest.getInstance("SHA-512");
-		hash.update(pattern.getBytes());
-		return new String(hash.digest());
+	public String getActivation() {
+		return activation;
+	}
+
+	public void setActivation(String activation) {
+		this.activation = activation;
 	}
 	
 	

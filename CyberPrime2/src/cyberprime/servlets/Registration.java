@@ -22,6 +22,7 @@ import cyberprime.entities.Clients;
 import cyberprime.entities.dao.ClientsDAO;
 import cyberprime.util.Constants;
 import cyberprime.util.EmailValidator;
+import cyberprime.util.FileMethods;
 import cyberprime.util.ImageEncryption;
 import cyberprime.util.ImageValidator;
 import cyberprime.util.RandomString;
@@ -55,12 +56,14 @@ public class Registration extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String repos = Constants.WAIKIT_PATH;
+		String repos = Constants.DEANE_PATH;
 		Clients client = new Clients();
 		ImageEncryption en = null;
 		File repo = new File(repos);
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		String saveFileName = "";
+		String newFileName = "";
+		boolean renameFile;
 			try{
 			factory.setSizeThreshold(2*1024*1024);
 			factory.setRepository(repo);
@@ -108,6 +111,18 @@ public class Registration extends HttpServlet {
 						if(iv.validate(fileName)){
 							try{
 								item.write(uploadedFile);
+								newFileName = session.getId()+fileName.substring(fileName.length()-4); 
+								if(uploadedFile.renameTo(new File(repos+newFileName))){
+									System.out.println("File has been renamed");
+									renameFile = true;
+								}
+								
+								else{
+									System.out.println("File rename failed");
+									renameFile = false;
+
+								}
+								
 							}catch(Exception e){
 								Object obj = new Object();
 								obj = "<p style='color:red'>*Access denied</p>";
@@ -116,13 +131,17 @@ public class Registration extends HttpServlet {
 								return;
 							}
 
-							en = new ImageEncryption(uploadedFile.getAbsolutePath());
+							if(renameFile)
+								en = new ImageEncryption(repos+newFileName);
 
+							else
+								en = new ImageEncryption(uploadedFile.getAbsolutePath());
+							
 							client.setImageHash(en.getHash());
 							client.setImageSize(en.getSize());
 							client.setImageExtension(en.getExtension());
-							
-							session.setAttribute("image",fileName);
+							session.setAttribute("image",newFileName);
+
 						}
 						else if(!iv.validate(fileName)){
 							Object obj = new Object();
@@ -168,7 +187,6 @@ public class Registration extends HttpServlet {
 						boolean check = ClientsDAO.checkUser(client);
 						boolean checkEmail = ClientsDAO.checkEmail(client);
 						if(!check && !checkEmail){
-
 								session.setAttribute("client", client);
 								request.getRequestDispatcher("patternRegister.jsp").forward(request, response);	
 	

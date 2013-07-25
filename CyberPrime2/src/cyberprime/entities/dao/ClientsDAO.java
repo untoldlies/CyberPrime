@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import cyberprime.entities.Clients;
+import cyberprime.util.EmailSender;
 
 
 
@@ -20,8 +21,8 @@ public class ClientsDAO {
 		Connection currentCon = db.getConnection();
 		
 		try{
-			String query = "insert into Client(imageHash,imageSize,imageExtension,userId,email,pattern) " +
-					"values(?,?,?,?,?,?)";
+			String query = "insert into Client(imageHash,imageSize,imageExtension,userId,email,pattern,token,activation) " +
+					"values(?,?,?,?,?,?,?,?)";
 			PreparedStatement pstmt = currentCon.prepareStatement(query);
 			// inserting values
 			pstmt.setString(1, clients.getImageHash());
@@ -30,6 +31,8 @@ public class ClientsDAO {
 			pstmt.setString(4, clients.getUserId());
 			pstmt.setString(5, clients.getEmail());
 			pstmt.setString(6, clients.getPattern());
+			pstmt.setString(7,clients.getToken());
+			pstmt.setString(8, clients.getActivation());
 			pstmt.executeUpdate();
 		
 	}catch (Exception ex) {
@@ -70,6 +73,8 @@ public class ClientsDAO {
 				client.setUserId(rs.getString(4));
 				client.setEmail(rs.getString(5));
 				client.setDBPattern(rs.getString(6));
+				client.setToken(rs.getString(7));
+				client.setActivation(rs.getString(8));
 			}
 
 		}catch(Exception ex){
@@ -201,12 +206,106 @@ public class ClientsDAO {
 		
 	}
 
-	public static void main(String args[]){
-		Clients client = new Clients();
-		client.setEmail("deanelooiz@hotmail.com");
-		System.out.println(checkEmail(client));
+	public static Clients activateClients(Clients clients){
+		Connection currentCon = db.getConnection();
 		
-		client.setUserId("g358a59407hcg96iidae");
-		System.out.println(checkUser(client));
+		try{
+			String query = "update Client set activation = ?, token = ? where userId= ?";
+			PreparedStatement pstmt = currentCon.prepareStatement(query);
+			pstmt.setString(1, clients.getActivation());
+			pstmt.setString(2, "null");
+			pstmt.setString(3, clients.getUserId());
+			pstmt.executeUpdate();
+		}catch(Exception ex){
+			System.out.println("Update failed: An Exception has occurred! "+ ex);
+			clients = null;
+		}		
+		finally {
+
+			if (currentCon != null) {
+				try {
+					currentCon.close();
+				} catch (Exception e) {
+				}
+
+				currentCon = null;
+			}
+		}
+		return clients;
+		
+		
+	}
+	
+	public static String retrieveToken(Clients clients){
+		Connection currentCon = db.getConnection();
+		ResultSet rs = null;
+		Clients c = new Clients();
+		c.setUserId(clients.getUserId());
+				try{
+					String query = "select token from Client where userId = ?";
+					PreparedStatement pstmt = currentCon.prepareStatement(query);
+					pstmt.setString(1, clients.getUserId());
+					rs = pstmt.executeQuery();
+					
+					while(rs.next()){
+						c.setToken(rs.getString(1));
+					}
+				}catch(Exception ex){
+					System.out.println("Update failed: An Exception has occurred! "+ ex);
+					clients = null;
+				}		
+				finally {
+		
+					if (currentCon != null) {
+						try {
+							currentCon.close();
+						} catch (Exception e) {
+						}
+		
+						currentCon = null;
+					}
+				}
+				return c.getToken();
+	}
+	
+	public static void main(String args[]){
+
+		Clients client = new Clients("userid","hash",102,".jpg","deanelooiz@hotmail.com","pattern");
+		client.setActivation("Pending");
+		client.setToken();
+		//Clients c = ClientsDAO.registerClient(client);
+		//System.out.println(client.getToken());
+		EmailSender email = new EmailSender(client);
+		email.sendActivationLink(client.getToken());
+//		Clients client = new Clients();
+//		client.setUserId("userid");
+//		String tokenc = ClientsDAO.retrieveToken(client);
+//		System.out.println(tokenc);
+//		
+//		client.setActivation("Active");
+//		ClientsDAO.activateClients(client);
+		
+		
+//		Clients c = ClientsDAO.retrieveClient(client);
+//		
+//		if(client.getToken().equals(c.getToken())){
+//			client.setActivation("Active");
+//			ClientsDAO.activateClients(client);
+//		}
+//		
+//		Clients c = ClientsDAO.retrieveClient(client);
+//		if(c.getActivation().equalsIgnoreCase("Active")){
+//			System.out.println("Your account has been activated");
+//			
+//			if(client.getImageHash().equals(c.getImageHash()) && client.getPattern().equals(c.getPattern())){
+//				System.out.println("You have been logged in");
+//			}
+//		}
+//		
+//		else{
+//			System.out.println("Please activate your account");
+//		}
+		
+		
 	}
 }

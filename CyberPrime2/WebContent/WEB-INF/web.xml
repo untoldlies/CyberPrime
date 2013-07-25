@@ -65,12 +65,20 @@
     <servlet-name>FileTransfer</servlet-name>
     <servlet-class>cyberprime.servlets.FileTransfer</servlet-class>
   </servlet>
+  <servlet-mapping>
+  <servlet-name>FileTransfer</servlet-name>
+  <url-pattern>/FileTransfer</url-pattern>
+  </servlet-mapping>
   
-  <listener>
-	<listener-class>
-	org.apache.commons.fileupload.servlet.FileCleanerCleanup
-	</listener-class>
-	</listener>
+   <servlet>
+    <display-name>ActivateAccount</display-name>
+    <servlet-name>ActivateAccount</servlet-name>
+    <servlet-class>cyberprime.servlets.ActivateAccount</servlet-class>
+  </servlet>
+   <servlet-mapping>
+    <servlet-name>ActivateAccount</servlet-name>
+    <url-pattern>/ActivateAccount</url-pattern>
+  </servlet-mapping>
   
   <filter>
     <filter-name>AccessFilter</filter-name>
@@ -89,7 +97,12 @@
     <description>Location to store uploaded file</description>
     <param-name>file-upload</param-name>
     <param-value>
-         D:\Temp\
+        C:\Users\Tan Wai Kit\Desktop\MAIN DESKTOP\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp1\wtpwebapps\CyberPrime2\
      </param-value>
   </context-param>
+  <context-param>
+  <param-name>file-download </param-name>
+  <param-value>C:\Users\Tan Wai Kit\Desktop\MAIN DESKTOP\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp1\wtpwebapps\CyberPrime2</param-value>
+  </context-param>
+  
 </web-app>

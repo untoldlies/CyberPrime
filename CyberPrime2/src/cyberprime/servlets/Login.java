@@ -1,10 +1,8 @@
 package cyberprime.servlets;
 
+import java.io.File;
 import java.io.IOException;
-import java.lang.ref.WeakReference;
 import java.security.NoSuchAlgorithmException;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.servlet.ServletException;
@@ -16,6 +14,8 @@ import javax.servlet.http.HttpSession;
 import cyberprime.entities.Clients;
 import cyberprime.entities.Sessions;
 import cyberprime.entities.dao.ClientsDAO;
+import cyberprime.util.Constants;
+import cyberprime.util.FileMethods;
 
 /**
  * Servlet implementation class Login
@@ -47,8 +47,12 @@ public class Login extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		Clients client = (Clients) session.getAttribute("client");
+		String image = (String)session.getAttribute("image");
+
 		String pattern = (String)request.getParameter("pattern");
 		
+		
+
 		Clients c = ClientsDAO.retrieveClient(client);
 		if(c == null){
 			
@@ -79,6 +83,15 @@ public class Login extends HttpServlet {
 			return;
 		}
 		
+		if(c.getActivation().equalsIgnoreCase("Pending")){
+			Object obj = new Object();
+			obj = "<p style='color:red'>*Your account has not been activated</p>";
+			request.setAttribute("loginResult", obj);
+			request.getRequestDispatcher("patternLogin.jsp").forward(request, response);
+			return;
+		}
+		
+		else if(c.getActivation().equalsIgnoreCase("Active")){
 			if(client.getImageHash().equals(c.getImageHash()) && client.getPattern().equals(c.getPattern())){
 				Sessions s = new Sessions(session.getId(),c.getUserId());
 //				s = SessionsDAO.createSession(s);
@@ -89,6 +102,9 @@ public class Login extends HttpServlet {
 				sessions.add(s);
 				session.setAttribute("c", c);
 				//session.setMaxInactiveInterval(10);
+				session.removeAttribute("image");
+				session.removeAttribute("client");
+				FileMethods.fileDelete(image);
 				request.getRequestDispatcher("secured/newHome.jsp").forward(request, response);
 			}	
 			
@@ -99,6 +115,9 @@ public class Login extends HttpServlet {
 				request.getRequestDispatcher("patternLogin.jsp").forward(request, response);
 				return;
 			}
+		}
+		
+
 		
 		}
 

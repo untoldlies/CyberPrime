@@ -3,6 +3,7 @@ package cyberprime.servlets;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -22,6 +23,8 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.servlet.ServletRequestContext;
 
+import sun.net.www.http.HttpClient;
+
 import cyberprime.entities.Clients;
 import cyberprime.entities.Notifications;
 import cyberprime.entities.Sessions;
@@ -33,24 +36,34 @@ public class FileTransfer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private boolean isMultipart;
 	private String filePath;
-	private int maxFileSize = 1024 * 1024 * 1000; //1gig size
+	private int maxFileSize = 1024 * 1024 * 955; // 1gb size
 	private File file;
 	private String Id = null;
 	private static final int BUFSIZE = 4096;
-	private String filePath2;
-	private String filePath4;
+	private int length = 0;
+	private HttpClient mHttpClient;
+	private HTTPrequestListener mHTTPrequestListener = null;
+	
+	public interface HTTPrequestListener
+    {
+        public void downloadProgress(int iPercent);
+    }
+	
+	public void setHTTPrequestListener(HTTPrequestListener httpRequestListener)
+    {
+        mHTTPrequestListener = httpRequestListener;
+    }
 
 	public void init() {
 		// Get the file location where it would be stored.
-		/*        DOWNLOAD FROM C:\Users\Tan Wai Kit\Desktop\MAIN DESKTOP\workspace\.metadata\.plugins\org.eclipse.wst.server.core\
-		tmp1\wtpwebapps\CyberPrime2 */
+		/*
+		 * DOWNLOAD FROM C:\Users\Tan Wai Kit\Desktop\MAIN
+		 * DESKTOP\workspace\.metadata\.plugins\org.eclipse.wst.server.core\
+		 * tmp1\wtpwebapps\CyberPrime2
+		 */
 		filePath = getServletContext().getInitParameter("file-upload");
-		filePath2 = getServletContext().getRealPath("") + "\\FileTransferDump" + File.separator
-				+ "Detective Conan - M9 - P2 [KnKF][XviD][AC3][422D609A].avi";
-		filePath4 = getServletContext().getRealPath("..\\..\\..\\..\\..\\..\\..\\..\\CyberPrime\\CyberPrime2\\FileTransferDump") + File.separator + 
-				"Detective Conan - M9 - P2 [KnKF][XviD][AC3][422D609A].avi";
-		//Can choose the path from xml files
-		//String path=getServletContext().getRealPath("/download.xml");
+		// filePath4 = getServletContext().getRealPath("") + File.separator +
+		// "";
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -60,7 +73,7 @@ public class FileTransfer extends HttpServlet {
 		Clients client = (Clients) session.getAttribute("c");
 
 		java.io.PrintWriter out = response.getWriter();
-		File repo = new File("D:\\Temp\\");
+		File repo = new File(filePath);
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		// maximum size that will be stored in memory
 		factory.setSizeThreshold(maxFileSize);
@@ -128,8 +141,6 @@ public class FileTransfer extends HttpServlet {
 							Sessions sess = (Sessions) sessionIt.next();
 
 							if (Id.equalsIgnoreCase(sess.getClientId())) {
-								System.out.println("Sessions "
-										+ sess.getClientId());
 								// Get the uploaded file parameters
 
 								Notifications n = new Notifications(
@@ -139,11 +150,15 @@ public class FileTransfer extends HttpServlet {
 								try {
 									NotificationsDAO.createNotification(n);
 									String fileName = item.getName();
+
 									// Write the file
 									if (fileName.lastIndexOf("\\") >= 0) {
+
 										file = new File(filePath
 												+ fileName.substring(fileName
 														.lastIndexOf("\\")));
+										length = request.getContentLength();
+										System.out.println(length);
 									} else {
 										file = new File(filePath
 												+ fileName.substring(fileName
@@ -159,9 +174,6 @@ public class FileTransfer extends HttpServlet {
 								} catch (Exception ex) {
 									out.print("<p><strong>No file found, please try again</strong></p>");
 								}
-
-								doGet(request, response);
-								return;
 							}
 
 							else {
@@ -173,22 +185,30 @@ public class FileTransfer extends HttpServlet {
 									return;
 								}
 
+								else if (length > maxFileSize) {
+
+								}
+
 								else {
 									out.println("<p><strong>Please put a a valid ID</strong></p>");
 									out.println("</body>");
 									out.println("</html>");
 								}
 							}
-
 						}
-
 					}
-
 				}
-
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			// Check the content length to prevent denial of service attacks
+			//length = 
+			if (length > maxFileSize) {
+				out.print("<p><strong>Posted content length of " + length
+						+ " exceeds limit of " + maxFileSize + "by "
+						+ (length - maxFileSize) + "</strong></p>");
+				System.out.println("length is " + (length - maxFileSize)
+						+ "bigger than " + maxFileSize);
+			}
 		}
 	}
 
@@ -200,13 +220,13 @@ public class FileTransfer extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, java.io.IOException {
-		
-		File file = new File(filePath4);
+
+		File file = new File(filePath);
 		int length = 0;
 		ServletOutputStream outStream = response.getOutputStream();
 		ServletContext context = getServletConfig().getServletContext();
-		//change here
-		String mimetype = context.getMimeType(filePath4);
+		// change here
+		String mimetype = context.getMimeType(filePath);
 
 		// sets response content type
 		if (mimetype == null) {
@@ -214,8 +234,8 @@ public class FileTransfer extends HttpServlet {
 		}
 		response.setContentType(mimetype);
 		response.setContentLength((int) file.length());
-		//remember to edit filepath
-		String fileName = (new File(filePath4)).getName();
+		// remember to edit filepath
+		String fileName = (new File(filePath)).getName();
 
 		// sets HTTP header
 		response.setHeader("Content-Disposition", "attachment; filename=\""
@@ -230,6 +250,7 @@ public class FileTransfer extends HttpServlet {
 		}
 
 		in.close();
+		file.delete();
 		outStream.close();
 	}
 }
