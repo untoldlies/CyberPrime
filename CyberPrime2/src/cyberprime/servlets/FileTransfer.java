@@ -1,34 +1,21 @@
 package cyberprime.servlets;
 
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.io.*;
+import java.util.*;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import javax.servlet.annotation.*;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.RequestContext;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.fileupload.servlet.ServletRequestContext;
+import org.apache.commons.fileupload.disk.*;
+import org.apache.commons.fileupload.servlet.*;
+import org.apache.commons.fileupload.*;
+import org.apache.commons.io.FileCleaningTracker;
 
-import sun.net.www.http.HttpClient;
-
-import cyberprime.entities.Clients;
-import cyberprime.entities.Notifications;
-import cyberprime.entities.Sessions;
-import cyberprime.entities.dao.NotificationsDAO;
+//import sun.net.www.http.HttpClient;
+import cyberprime.entities.*;
+import cyberprime.entities.dao.*;
+import cyberprime.util.TestProgressListener;
 
 @WebServlet("/FileTransfer")
 public class FileTransfer extends HttpServlet {
@@ -36,43 +23,58 @@ public class FileTransfer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private boolean isMultipart;
 	private String filePath;
-	private int maxFileSize = 1024 * 1024 * 955; // 1gb size
+	private int maxFileSize = 1024 * 1024 * 50; // 1gb size
 	private File file;
 	private String Id = null;
 	private static final int BUFSIZE = 4096;
 	private int length = 0;
-	private HttpClient mHttpClient;
-	private HTTPrequestListener mHTTPrequestListener = null;
-	
-	public interface HTTPrequestListener
-    {
-        public void downloadProgress(int iPercent);
-    }
-	
-	public void setHTTPrequestListener(HTTPrequestListener httpRequestListener)
-    {
-        mHTTPrequestListener = httpRequestListener;
-    }
 
 	public void init() {
-		// Get the file location where it would be stored.
 		/*
 		 * DOWNLOAD FROM C:\Users\Tan Wai Kit\Desktop\MAIN
 		 * DESKTOP\workspace\.metadata\.plugins\org.eclipse.wst.server.core\
 		 * tmp1\wtpwebapps\CyberPrime2
 		 */
-		filePath = getServletContext().getInitParameter("file-upload");
-		// filePath4 = getServletContext().getRealPath("") + File.separator +
-		// "";
+		filePath = getServletContext().getInitParameter("file-upload")
+				+ "commons-io-2.4-bin.zip";
+		 /*filePath4 = getServletContext().getRealPath("") + File.separator +
+		 "";*/
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, java.io.IOException {
-
-		HttpSession session = request.getSession();
-		Clients client = (Clients) session.getAttribute("c");
-
+		
 		java.io.PrintWriter out = response.getWriter();
+		
+		// Check that we have a file upload request
+				isMultipart = ServletFileUpload.isMultipartContent(request);
+				response.setContentType("text/html");
+
+				if (!isMultipart) {
+					out.println("<html>");
+					out.println("<head>");
+					out.println("<title>Servlet upload</title>");
+					out.println("</head>");
+					out.println("<body>");
+					out.println("<p><strong>Thank you for waiting</strong></p>");
+					out.println("<p>No file uploaded</p>");
+					out.println("</body>");
+					out.println("</html>");
+					return;
+				}
+
+				else {
+
+					out.println("<html>");
+					out.println("<head>");
+					out.println("<title>Servlet upload</title>");
+					out.println("<style>");
+					out.println("body {width:775px; height:570px; background-color:grey; color:white}");
+					out.println("</style>");
+					out.println("</head>");
+					out.println("<body>");
+				}
+				
 		File repo = new File(filePath);
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		// maximum size that will be stored in memory
@@ -84,45 +86,20 @@ public class FileTransfer extends HttpServlet {
 		// maximum file size to be uploaded.
 		upload.setSizeMax(maxFileSize);
 
-		// Check that we have a file upload request
-		isMultipart = ServletFileUpload.isMultipartContent(request);
-		response.setContentType("text/html");
-
-		if (!isMultipart) {
-			out.println("<html>");
-			out.println("<head>");
-			out.println("<title>Servlet upload</title>");
-			out.println("</head>");
-			out.println("<body>");
-			out.println("<p><strong>Thank you for waiting</strong></p>");
-			out.println("<p>No file uploaded</p>");
-			out.println("</body>");
-			out.println("</html>");
-			return;
-		}
-
-		else {
-
-			out.println("<html>");
-			out.println("<head>");
-			out.println("<title>Servlet upload</title>");
-			out.println("<style>");
-			out.println("body {width:775px; height:570px; background-color:grey; color:white}");
-			out.println("</style>");
-			out.println("</head>");
-			out.println("<body>");
-		}
-
+		TestProgressListener progressListener = new TestProgressListener();
+		upload.setProgressListener(progressListener);
+		
+		HttpSession session = request.getSession();
+		session.setAttribute("testProgressListener", testProgressListener);
+		Clients client = (Clients) session.getAttribute("c");
+		
 		try {
-
 			if (repo != null) {
-
 				RequestContext req = new ServletRequestContext(request);
 				// Parse the request to get file items.
 				List<FileItem> items = upload.parseRequest(req);
 				// Process the uploaded file items
 				Iterator<FileItem> iterator = items.iterator();
-
 				Set sessions = (Set) getServletContext().getAttribute(
 						"cyberprime.sessions");
 				Iterator sessionIt = sessions.iterator();
@@ -131,6 +108,8 @@ public class FileTransfer extends HttpServlet {
 					FileItem item = iterator.next();
 					if (item.isFormField()) {
 						String fieldName = item.getFieldName();
+						String fileName = item.getName();
+
 						if (fieldName.equalsIgnoreCase("Id"))
 							Id = item.getString();
 					}
@@ -150,6 +129,9 @@ public class FileTransfer extends HttpServlet {
 								try {
 									NotificationsDAO.createNotification(n);
 									String fileName = item.getName();
+									String contentType = item.getContentType();
+									boolean isInMemory = item.isInMemory();
+									long sizeInBytes = item.getSize();
 
 									// Write the file
 									if (fileName.lastIndexOf("\\") >= 0) {
@@ -157,8 +139,6 @@ public class FileTransfer extends HttpServlet {
 										file = new File(filePath
 												+ fileName.substring(fileName
 														.lastIndexOf("\\")));
-										length = request.getContentLength();
-										System.out.println(length);
 									} else {
 										file = new File(filePath
 												+ fileName.substring(fileName
@@ -167,10 +147,12 @@ public class FileTransfer extends HttpServlet {
 										item.write(file);
 										out.println("Uploaded Filename: "
 												+ fileName + "<br>");
+										out.println("<p>File Size: "  
+												+ sizeInBytes + "</p>");
 									}
 									out.println("</body>");
 									out.println("</html>");
-
+									
 								} catch (Exception ex) {
 									out.print("<p><strong>No file found, please try again</strong></p>");
 								}
@@ -185,10 +167,6 @@ public class FileTransfer extends HttpServlet {
 									return;
 								}
 
-								else if (length > maxFileSize) {
-
-								}
-
 								else {
 									out.println("<p><strong>Please put a a valid ID</strong></p>");
 									out.println("</body>");
@@ -199,15 +177,20 @@ public class FileTransfer extends HttpServlet {
 					}
 				}
 			}
-		} catch (Exception e) {
-			// Check the content length to prevent denial of service attacks
-			//length = 
+		} catch (FileUploadException e) {
+
+			length = request.getContentLength();
 			if (length > maxFileSize) {
+
 				out.print("<p><strong>Posted content length of " + length
 						+ " exceeds limit of " + maxFileSize + "by "
 						+ (length - maxFileSize) + "</strong></p>");
 				System.out.println("length is " + (length - maxFileSize)
 						+ "bigger than " + maxFileSize);
+				return;
+				
+			} else {
+				e.printStackTrace();
 			}
 		}
 	}
@@ -234,7 +217,7 @@ public class FileTransfer extends HttpServlet {
 		}
 		response.setContentType(mimetype);
 		response.setContentLength((int) file.length());
-		// remember to edit filepath
+
 		String fileName = (new File(filePath)).getName();
 
 		// sets HTTP header
@@ -250,7 +233,19 @@ public class FileTransfer extends HttpServlet {
 		}
 
 		in.close();
-		file.delete();
+		// file.delete();
 		outStream.close();
 	}
+
+	//auto file deletion after downloading
+	public static DiskFileItemFactory newDiskFileItemFactory(
+			ServletContext context, File repository) {
+		FileCleaningTracker fileCleaningTracker = FileCleanerCleanup
+				.getFileCleaningTracker(context);
+		DiskFileItemFactory factory = new DiskFileItemFactory(
+				DiskFileItemFactory.DEFAULT_SIZE_THRESHOLD, repository);
+		factory.setFileCleaningTracker(fileCleaningTracker);
+		return factory;
+	}
+
 }
