@@ -10,9 +10,8 @@ import javax.servlet.annotation.*;
 import org.apache.commons.fileupload.disk.*;
 import org.apache.commons.fileupload.servlet.*;
 import org.apache.commons.fileupload.*;
-import org.apache.commons.io.FileCleaningTracker;
+import org.apache.commons.io.*;
 
-//import sun.net.www.http.HttpClient;
 import cyberprime.entities.*;
 import cyberprime.entities.dao.*;
 import cyberprime.util.TestProgressListener;
@@ -23,11 +22,10 @@ public class FileTransfer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private boolean isMultipart;
 	private String filePath;
-	private int maxFileSize = 1024 * 1024 * 50; // 1gb size
+	private int maxFileSize = 1024 * 1024 * 50; // 50mb size
 	private File file;
 	private String Id = null;
 	private static final int BUFSIZE = 4096;
-	private int length = 0;
 
 	public void init() {
 		/*
@@ -35,10 +33,7 @@ public class FileTransfer extends HttpServlet {
 		 * DESKTOP\workspace\.metadata\.plugins\org.eclipse.wst.server.core\
 		 * tmp1\wtpwebapps\CyberPrime2
 		 */
-		filePath = getServletContext().getInitParameter("file-upload")
-				+ "commons-io-2.4-bin.zip";
-		 /*filePath4 = getServletContext().getRealPath("") + File.separator +
-		 "";*/
+		filePath = getServletContext().getInitParameter("file-upload");
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -88,9 +83,10 @@ public class FileTransfer extends HttpServlet {
 
 		TestProgressListener testProgressListener = new TestProgressListener();
 		upload.setProgressListener(testProgressListener);
-		
+
 		HttpSession session = request.getSession();
 		session.setAttribute("testProgressListener", testProgressListener);
+		
 		Clients client = (Clients) session.getAttribute("c");
 		
 		try {
@@ -108,7 +104,6 @@ public class FileTransfer extends HttpServlet {
 					FileItem item = iterator.next();
 					if (item.isFormField()) {
 						String fieldName = item.getFieldName();
-						String fileName = item.getName();
 
 						if (fieldName.equalsIgnoreCase("Id"))
 							Id = item.getString();
@@ -129,9 +124,8 @@ public class FileTransfer extends HttpServlet {
 								try {
 									NotificationsDAO.createNotification(n);
 									String fileName = item.getName();
-									String contentType = item.getContentType();
-									boolean isInMemory = item.isInMemory();
 									long sizeInBytes = item.getSize();
+									String mimeType = item.getContentType();
 
 									// Write the file
 									if (fileName.lastIndexOf("\\") >= 0) {
@@ -148,27 +142,29 @@ public class FileTransfer extends HttpServlet {
 										out.println("Uploaded Filename: "
 												+ fileName + "<br>");
 										out.println("<p>File Size: "  
-												+ sizeInBytes + "</p>");
+												+ (sizeInBytes/(1000*1000)) + "mb " + "</p>");
 									}
 									out.println("</body>");
 									out.println("</html>");
 									
 								} catch (Exception ex) {
-									out.print("<p><strong>No file found, please try again</strong></p>");
+									out.print("<p><strong>No file found, please try again.</strong></p>");
+									out.println("</body>");
+									out.println("</html>");
 								}
 							}
 
 							else {
 
 								if (Id.isEmpty()) {
-									out.println("<p><strong>Please enter a username</strong></p>");
+									out.println("<p><strong>Please enter a username.</strong></p>");
 									out.println("</body>");
 									out.println("</html>");
 									return;
 								}
 
 								else {
-									out.println("<p><strong>Please put a a valid ID</strong></p>");
+									out.println("<p><strong>Please put a a valid ID.</strong></p>");
 									out.println("</body>");
 									out.println("</html>");
 								}
@@ -178,15 +174,18 @@ public class FileTransfer extends HttpServlet {
 				}
 			}
 		} catch (FileUploadException e) {
-
+			
+			int length = 0;
 			length = request.getContentLength();
 			if (length > maxFileSize) {
 
-				out.print("<p><strong>Posted content length of " + length
-						+ " exceeds limit of " + maxFileSize + "by "
-						+ (length - maxFileSize) + "</strong></p>");
-				System.out.println("length is " + (length - maxFileSize)
-						+ "bigger than " + maxFileSize);
+				out.println("<p><strong>Posted content length of " + (length/(1000 * 1000))
+						+ " exceeds limit of " + (maxFileSize/(1000*1000)) + "mb " + " by "
+						+ ((length - maxFileSize)/(1000*1000)) + "mb " + "</strong></p>" + "<br/>");
+				out.println("<p>Please try again.</p>");
+				System.out.println("length is " + ((length - maxFileSize)/(1000*1000)) + "mb "
+						+ " bigger than " + (maxFileSize/(1000*1000)) + "mb ");
+				
 				return;
 				
 			} else {
@@ -203,13 +202,12 @@ public class FileTransfer extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, java.io.IOException {
-
-		File file = new File(filePath);
+	
+		file = new File(filePath + file.getName());
 		int length = 0;
 		ServletOutputStream outStream = response.getOutputStream();
 		ServletContext context = getServletConfig().getServletContext();
-		// change here
-		String mimetype = context.getMimeType(filePath);
+		String mimetype = context.getMimeType(filePath + file.getName());
 
 		// sets response content type
 		if (mimetype == null) {
@@ -218,7 +216,7 @@ public class FileTransfer extends HttpServlet {
 		response.setContentType(mimetype);
 		response.setContentLength((int) file.length());
 
-		String fileName = (new File(filePath)).getName();
+		String fileName = (new File(filePath + file.getName())).getName();
 
 		// sets HTTP header
 		response.setHeader("Content-Disposition", "attachment; filename=\""
@@ -233,19 +231,9 @@ public class FileTransfer extends HttpServlet {
 		}
 
 		in.close();
-		// file.delete();
+		outStream.flush();
 		outStream.close();
-	}
-
-	//auto file deletion after downloading
-	public static DiskFileItemFactory newDiskFileItemFactory(
-			ServletContext context, File repository) {
-		FileCleaningTracker fileCleaningTracker = FileCleanerCleanup
-				.getFileCleaningTracker(context);
-		DiskFileItemFactory factory = new DiskFileItemFactory(
-				DiskFileItemFactory.DEFAULT_SIZE_THRESHOLD, repository);
-		factory.setFileCleaningTracker(fileCleaningTracker);
-		return factory;
-	}
+		file.delete();
+		}
 
 }

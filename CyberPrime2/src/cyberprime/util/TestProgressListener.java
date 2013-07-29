@@ -4,15 +4,15 @@ import org.apache.commons.fileupload.*;
 
 public class TestProgressListener implements ProgressListener {
 	private long num100Ks = 0;
+
 	private long theBytesRead = 0;
 	private long theContentLength = -1;
 	private int whichItem = 0;
 	private int percentDone = 0;
 	private boolean contentLengthKnown = false;
 
-	@Override
 	public void update(long bytesRead, long contentLength, int items) {
-		// TODO Auto-generated method stub
+
 		if (contentLength > -1) {
 			contentLengthKnown = true;
 		}
@@ -21,25 +21,25 @@ public class TestProgressListener implements ProgressListener {
 		whichItem = items;
 
 		long nowNum100Ks = bytesRead / 100000;
-		// Only run this code once every 100k
+		// Only run this code once every 100K
 		if (nowNum100Ks > num100Ks) {
 			num100Ks = nowNum100Ks;
 			if (contentLengthKnown) {
-				percentDone = (int) Math.round(100.00 * bytesRead
-						/ contentLength);
+				percentDone = (int) Math.round(100.00 * bytesRead / contentLength);
 			}
 			System.out.println(getMessage());
 		}
 	}
-	
-	public String getMessage(){
-		if (theContentLength == -1){
-			return "" + theBytesRead + " of unknown bytes have been read.";
-		} else{
-			return "" + theBytesRead + " of " + theContentLength + "bytes have been read(" + percentDone + "% done.";
+
+	public String getMessage() {
+		if (theContentLength == -1) {
+			return "" + theBytesRead + " of Unknown-Total bytes have been read.";
+		} else {
+			return "" + theBytesRead + " of " + theContentLength + " bytes have been read (" + percentDone + "% done).";
 		}
+
 	}
-	
+
 	public long getNum100Ks() {
 		return num100Ks;
 	}

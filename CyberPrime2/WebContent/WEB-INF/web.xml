@@ -114,9 +114,5 @@
      org.apache.commons.fileupload.servlet.FileCleanerCleanup
      </listener-class>
      </listener>
-  <context-param>
-  <param-name>file-download </param-name>
-  <param-value>C:\Users\Tan Wai Kit\Desktop\MAIN DESKTOP\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp1\wtpwebapps\CyberPrime2\</param-value>
-  </context-param>
-  
+ 
 </web-app>
