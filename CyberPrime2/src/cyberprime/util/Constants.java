@@ -7,5 +7,6 @@ public class Constants {
 	public static String WAIKIT_PATH = "C:\\Users\\Tan Wai Kit\\Desktop\\CyberPrime\\CyberPrime2\\WebContent\\loginImages\\";
 	public static String Samuel_PATH = "";
 	public static String NICHOLAS_PATH = "";
-
+	
+	public static String IP_ADDRESS = "localhost";
 }

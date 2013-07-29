@@ -59,6 +59,9 @@ public class Logon extends HttpServlet {
 		File repo = new File(repos);
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		String saveFileName = "";
+		String newFileName = "";
+		boolean renameFile;
+		
 			try{
 			factory.setSizeThreshold(2*1024*1024);
 			factory.setRepository(repo);
@@ -87,6 +90,18 @@ public class Logon extends HttpServlet {
 						if(iv.validate(fileName)){
 							try{
 								item.write(uploadedFile);
+								newFileName = session.getId()+fileName.substring(fileName.length()-4); 
+								if(uploadedFile.renameTo(new File(repos+newFileName))){
+									System.out.println("File has been renamed");
+									renameFile = true;
+								}
+								
+								else{
+									System.out.println("File rename failed");
+									renameFile = false;
+
+								}
+								
 							}catch(Exception e){
 								Object obj = new Object();
 								obj = "<p style='color:red'>*Access denied</p>";
@@ -95,13 +110,23 @@ public class Logon extends HttpServlet {
 								return;
 							}
 
+							if(renameFile){
+								en = new ImageEncryption(repos+newFileName);
+							}
+
+
+							else{
+								en = new ImageEncryption(uploadedFile.getAbsolutePath());
+							}
+
+							
 							en = new ImageEncryption(uploadedFile.getAbsolutePath());
 
 							client.setImageHash(en.getHash());
 							client.setImageSize(en.getSize());
 							client.setImageExtension(en.getExtension());
-							
-							session.setAttribute("image",fileName);
+							session.setAttribute("image",newFileName);
+
 						}
 						
 						else{

@@ -64,10 +64,8 @@ public class Login extends HttpServlet {
 			}
 		
 		else if(c != null){
-			
 		client.setUserId(c.getUserId());	
 		if(pattern.length() != 0){
-			
 			try {
 				client.setPattern(pattern);
 			} catch (NoSuchAlgorithmException e) {
@@ -83,6 +81,7 @@ public class Login extends HttpServlet {
 			return;
 		}
 		
+
 		if(c.getActivation().equalsIgnoreCase("Pending")){
 			Object obj = new Object();
 			obj = "<p style='color:red'>*Your account has not been activated</p>";
