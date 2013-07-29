@@ -61,24 +61,27 @@ public class Register extends HttpServlet {
 			Object obj = new Object();
 			obj = "<p style='color:red'>*You did not choose a pattern</p>";
 			request.setAttribute("regResult", obj);
-			request.getRequestDispatcher("pattern.jsp").forward(request, response);
+			request.getRequestDispatcher("patternRegister.jsp").forward(request, response);
 			return;
 		}
 		client.setActivation("Pending");
 		client.setToken();
 		String token = client.getToken();
 		String tokenHash = "";
-		try {
-			tokenHash = Algorithms.encrypt(token,client.getUserId().substring(0, 15));
-			client.setToken(tokenHash);
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		Clients c = ClientsDAO.registerClient(client);
-		EmailSender email = new EmailSender(client);
-		email.sendActivationLink(token);
+		Clients c = new Clients();
+			try {
+				tokenHash = Algorithms.encrypt(token,client.getUserId().substring(0,16));
+				client.setToken(tokenHash);
+				c = ClientsDAO.registerClient(client);
+				EmailSender email = new EmailSender(client);
+				email.sendActivationLink(token);
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		
+
 		if(c!=null){
 			session.removeAttribute("image");
 			session.removeAttribute("client");
@@ -93,7 +96,7 @@ public class Register extends HttpServlet {
 			Object obj = new Object();
 			obj = "<p style='color:red'>*Registration failed</p>";
 			request.setAttribute("regResult", obj);
-			request.getRequestDispatcher("pattern.jsp").forward(request, response);
+			request.getRequestDispatcher("patternRegister.jsp").forward(request, response);
 			return;
 		}
 		

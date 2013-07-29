@@ -12,8 +12,6 @@
 
 #webcam {
     position:relative;
-    margin-top:50px;
-    margin-bottom:50px;
 }
 
 #webcam > span {
@@ -30,7 +28,25 @@
 }
 </style><script type="text/javascript" src="resources/jquery-1.js"></script>
 <script type="text/javascript" src="resources/jquery.js"></script>
-</head><body>
+
+<!-- For telasocial labs -->
+<title>Simple Camera Canvas Manipulation</title>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<script type="text/javascript" src="camcanvas.js"></script>
+
+</head><body onload="init()">
+
+<button onclick="setFunction(passEmboss)">Emboss</button>
+<button onclick="setFunction(passRed)">Red</button>
+<button onclick="setFunction(passNormal)">Normal</button>
+<button onclick="setFunction(passInverse)">Inversed</button>
+<button onclick="setFunction(passGray)">Grayscale</button>
+<p>
+<video id="v" width="320" height="240"></video>
+<canvas id="c" width="320" height="240"></canvas>
+</p>
+<!-- End of telasocial labs -->
+
 <p id="status" style="height:22px; color:#c00;font-weight:bold;"></p>
 <div id="webcam">
 </div>
