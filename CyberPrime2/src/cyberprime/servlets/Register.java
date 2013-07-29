@@ -61,7 +61,7 @@ public class Register extends HttpServlet {
 			Object obj = new Object();
 			obj = "<p style='color:red'>*You did not choose a pattern</p>";
 			request.setAttribute("regResult", obj);
-			request.getRequestDispatcher("pattern.jsp").forward(request, response);
+			request.getRequestDispatcher("patternRegister.jsp").forward(request, response);
 			return;
 		}
 		client.setActivation("Pending");
@@ -96,7 +96,7 @@ public class Register extends HttpServlet {
 			Object obj = new Object();
 			obj = "<p style='color:red'>*Registration failed</p>";
 			request.setAttribute("regResult", obj);
-			request.getRequestDispatcher("pattern.jsp").forward(request, response);
+			request.getRequestDispatcher("patternRegister.jsp").forward(request, response);
 			return;
 		}
 		
