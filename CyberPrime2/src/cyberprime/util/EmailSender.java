@@ -56,7 +56,7 @@ public class EmailSender {
 				message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(c.getEmail()));
 				message.setSubject(subject);
 				message.setContent("<h1>Dear client,</h1><p>Please activate your account by clicking " +
-						"<a rel='nofollow' target='_blank' href='http://192.168.43.116/CyberPrime2/ActivateAccount?token="+token+"&userId="+c.getUserId()+"'>here</a></p>",
+						"<a rel='nofollow' target='_blank' href='http://localhost/CyberPrime2/ActivateAccount?token="+token+"&userId="+c.getUserId()+"'>here</a></p>",
                         "text/html" );
 				Transport.send(message);
 				System.out.print("send");

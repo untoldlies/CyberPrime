@@ -83,7 +83,11 @@ public class GetNotifications extends HttpServlet {
 		    	 }
 		    	 html+="<div style='border-style:solid;border-color:black;border-width:1px;padding:5px'>";
 		    	 html+=content+"<br>";
-		    	 html+="<a href=''>Accept</a>         <a href=''>Reject</a>";
+		    	 if(n.getContent().equalsIgnoreCase("AddUser"))
+		    		 html+="<a href=''>Accept</a>         <a href=''>Reject</a>";
+		    	 
+		    	 else if(n.getContent().equalsIgnoreCase("FileTransfer"))
+		    		 html+="<a href ='FileTransfer'>Accept</a>";
 		    	 html+="</div>";
 		     }
 		     
@@ -93,7 +97,7 @@ public class GetNotifications extends HttpServlet {
 		    	 String content = "";
 		    	 if(n.getContent().equalsIgnoreCase("FileTransfer")){
 		    		 content = "You have requested to send a file to "+n.getReceiver();
-		    		 html+="<a href ='FileTransfer'>Accept</a>";
+
 		    	 }
 		    	 
 		    	 else if(n.getContent().equalsIgnoreCase("AddUser")){
