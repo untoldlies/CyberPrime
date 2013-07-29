@@ -68,17 +68,20 @@ public class Register extends HttpServlet {
 		client.setToken();
 		String token = client.getToken();
 		String tokenHash = "";
-		try {
-			tokenHash = Algorithms.encrypt(token,client.getUserId().substring(0, 15));
-			client.setToken(tokenHash);
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		Clients c = ClientsDAO.registerClient(client);
-		EmailSender email = new EmailSender(client);
-		email.sendActivationLink(token);
+		Clients c = new Clients();
+			try {
+				tokenHash = Algorithms.encrypt(token,client.getUserId().substring(0,16));
+				client.setToken(tokenHash);
+				c = ClientsDAO.registerClient(client);
+				EmailSender email = new EmailSender(client);
+				email.sendActivationLink(token);
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		
+
 		if(c!=null){
 			session.removeAttribute("image");
 			session.removeAttribute("client");

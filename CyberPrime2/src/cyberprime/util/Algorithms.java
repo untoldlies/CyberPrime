@@ -40,8 +40,8 @@ public static String encrypt(String Data,String key) throws Exception {
        Key cKey = generateKey(key);
        Cipher c = Cipher.getInstance(ALGO);
        c.init(Cipher.DECRYPT_MODE, cKey);
-       byte[] decordedValue = new BASE64Decoder().decodeBuffer(encryptedData);
-       byte[] decValue = c.doFinal(decordedValue);
+       byte[] decodedValue = new BASE64Decoder().decodeBuffer(encryptedData);
+       byte[] decValue = c.doFinal(decodedValue);
        String decryptedValue = new String(decValue);
        return decryptedValue;
    }
@@ -58,6 +58,7 @@ public static String encrypt(String Data,String key) throws Exception {
    public static void main(String args[]) throws Exception{
 	   
 	   String encryptedData = Algorithms.encrypt("This is a data", "seckeycyberprime");
+	   System.out.println(encryptedData);
 	   System.out.println(Algorithms.decrypt(encryptedData, "seckeycyberprime"));
    }
 	

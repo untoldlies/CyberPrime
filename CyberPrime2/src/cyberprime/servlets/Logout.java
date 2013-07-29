@@ -41,7 +41,6 @@ public class Logout extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		Clients client = (Clients)session.getAttribute("c");
-
 			Sessions s = new Sessions(session.getId(), client.getUserId());
 			//s = SessionsDAO.deleteSession(s);
 			Set sessions = (Set) getServletContext().getAttribute("cyberprime.sessions");

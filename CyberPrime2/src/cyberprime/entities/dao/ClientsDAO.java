@@ -236,6 +236,35 @@ public class ClientsDAO {
 		
 	}
 	
+	public static boolean changePattern(Clients clients){
+		boolean patternChanged = false;
+		Connection currentCon = db.getConnection();
+		try{
+			String query = "update Client set pattern = ? where imageHash= ?";
+			PreparedStatement pstmt = currentCon.prepareStatement(query);
+			pstmt.setString(1, clients.getPattern());
+			pstmt.setString(2, clients.getImageHash());
+			pstmt.executeUpdate();
+			patternChanged = true;
+		}catch(Exception ex){
+			System.out.println("Update failed: An Exception has occurred! "+ ex);
+			clients = null;
+		}		
+		finally {
+
+			if (currentCon != null) {
+				try {
+					currentCon.close();
+				} catch (Exception e) {
+				}
+
+				currentCon = null;
+			}
+		}
+		
+		return patternChanged;
+	}
+	
 	public static String retrieveToken(Clients clients){
 		Connection currentCon = db.getConnection();
 		ResultSet rs = null;

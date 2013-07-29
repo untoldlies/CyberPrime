@@ -36,13 +36,15 @@ public class ActivateAccount extends HttpServlet {
 		Clients client = new Clients();
 		client.setUserId(userId);
 		String tokenc = ClientsDAO.retrieveToken(client);
-		try {
-			tokenc = Algorithms.decrypt(tokenc,client.getUserId().substring(0, 15));
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+			try {
+				tokenc = Algorithms.decrypt(tokenc,userId.substring(0,16));
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		
+
 		
 		if(tokenc.equalsIgnoreCase("null")){
 			Object obj = new Object();
