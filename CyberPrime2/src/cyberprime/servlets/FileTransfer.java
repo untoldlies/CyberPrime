@@ -86,8 +86,8 @@ public class FileTransfer extends HttpServlet {
 		// maximum file size to be uploaded.
 		upload.setSizeMax(maxFileSize);
 
-		TestProgressListener progressListener = new TestProgressListener();
-		upload.setProgressListener(progressListener);
+		TestProgressListener testProgressListener = new TestProgressListener();
+		upload.setProgressListener(testProgressListener);
 		
 		HttpSession session = request.getSession();
 		session.setAttribute("testProgressListener", testProgressListener);
