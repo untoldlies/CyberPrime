@@ -26,8 +26,22 @@
 #canvas {    border:20px solid #ccc;
     background:#eee;
 }
-</style><script type="text/javascript" src="resources/jquery-1.js"></script>
+</style>
+<script type="text/javascript" src="resources/jquery-1.js"></script>
 <script type="text/javascript" src="resources/jquery.js"></script>
+
+<!-- For Encryption -->
+<script>
+function encrypt(w,h) { 
+   var pixels = bCtx.getImageData(0, 0, w, h);
+   var pixelData = pixels.data;
+   var encrypted = Algorithms.encrypt(pixelData,"key");
+   
+   pixels.data = encrypted;
+   gCtx.putImageData(pixels, 0, 0);
+} 
+</script>
+<!-- End of Encryption -->
 
 <!-- For telasocial labs -->
 <title>Simple Camera Canvas Manipulation</title>
@@ -35,12 +49,7 @@
 <script type="text/javascript" src="camcanvas.js"></script>
 
 </head><body onload="init()">
-
-<button onclick="setFunction(passEmboss)">Emboss</button>
-<button onclick="setFunction(passRed)">Red</button>
-<button onclick="setFunction(passNormal)">Normal</button>
-<button onclick="setFunction(passInverse)">Inversed</button>
-<button onclick="setFunction(passGray)">Grayscale</button>
+<button onclick="setFunction(encrypt)">Encrypt</button>
 <p>
 <video id="v" width="320" height="240"></video>
 <canvas id="c" width="320" height="240"></canvas>
