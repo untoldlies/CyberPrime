@@ -305,7 +305,7 @@ ${loginResult}
       </div>
     </div>
     <footer>
-      <p>Cyber Prime | Created May 2013 | Secure, anonymous collaboration.</a></p>
+      <p>Cyber Prime | Created May 2013 | Secure, anonymous collaboration.</p>
     </footer>
   </div>
   <p>&nbsp;</p>

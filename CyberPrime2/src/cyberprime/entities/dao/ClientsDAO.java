@@ -1,6 +1,8 @@
 package cyberprime.entities.dao;
 
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -236,19 +238,26 @@ public class ClientsDAO {
 		
 	}
 	
-	public static boolean changePattern(Clients clients){
-		boolean patternChanged = false;
+	public static String changePattern(Clients clients){
 		Connection currentCon = db.getConnection();
+		ResultSet rs = null;
+		String pattern = "";
 		try{
-			String query = "update Client set pattern = ? where imageHash= ?";
+			String selectQuery = "select pattern from Client where userId= ?";
+			PreparedStatement pstmt1 = currentCon.prepareStatement(selectQuery);
+			pstmt1.setString(1, clients.getUserId());
+			rs = pstmt1.executeQuery();
+			while(rs.next()){
+				pattern = rs.getString(1);
+			}
+			
+			String query = "update Client set pattern = ? where userId= ?";
 			PreparedStatement pstmt = currentCon.prepareStatement(query);
 			pstmt.setString(1, clients.getPattern());
-			pstmt.setString(2, clients.getImageHash());
+			pstmt.setString(2, clients.getUserId());
 			pstmt.executeUpdate();
-			patternChanged = true;
 		}catch(Exception ex){
 			System.out.println("Update failed: An Exception has occurred! "+ ex);
-			clients = null;
 		}		
 		finally {
 
@@ -262,7 +271,35 @@ public class ClientsDAO {
 			}
 		}
 		
-		return patternChanged;
+		return pattern;
+	}
+	
+	public static Clients changeImage(Clients clients){
+		Connection currentCon = db.getConnection();
+		Clients c = new Clients();
+		try{
+			String query = "update Client set imageHash = ? where userId= ?";
+			PreparedStatement pstmt = currentCon.prepareStatement(query);
+			pstmt.setString(1, clients.getImageHash());
+			pstmt.setString(2, clients.getUserId());
+			pstmt.executeUpdate();
+		}catch(Exception ex){
+			System.out.println("Update failed: An Exception has occurred! "+ ex);
+			c = null;
+		}		
+		finally {
+
+			if (currentCon != null) {
+				try {
+					currentCon.close();
+				} catch (Exception e) {
+				}
+
+				currentCon = null;
+			}
+		}
+		
+		return c;
 	}
 	
 	public static String retrieveToken(Clients clients){
@@ -297,15 +334,19 @@ public class ClientsDAO {
 				return c.getToken();
 	}
 	
-	public static void main(String args[]){
+	public static void main(String args[]) throws NoSuchAlgorithmException, UnsupportedEncodingException{
 
-		Clients client = new Clients("userid","hash",102,".jpg","deanelooiz@hotmail.com","pattern");
+		Clients client = new Clients("57g4hab18bbi9926493e",null,102,".jpg","deanelooiz@hotmail.com","pattern");
 		client.setActivation("Pending");
 		client.setToken();
 		//Clients c = ClientsDAO.registerClient(client);
+		client.setPattern("00");
+		String oldPattern = ClientsDAO.changePattern(client);
+		System.out.println("Old pattern = "+oldPattern);
+		System.out.println("New Pattern = "+client.getPattern());
 		//System.out.println(client.getToken());
-		EmailSender email = new EmailSender(client);
-		email.sendActivationLink(client.getToken());
+//		EmailSender email = new EmailSender(client);
+//		email.sendActivationLink(client.getToken());
 //		Clients client = new Clients();
 //		client.setUserId("userid");
 //		String tokenc = ClientsDAO.retrieveToken(client);

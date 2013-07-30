@@ -68,6 +68,8 @@ public class Login extends HttpServlet {
 		if(pattern.length() != 0){
 			try {
 				client.setPattern(pattern);
+				System.out.println(client.getPattern());
+				System.out.println(c.getPattern());
 			} catch (NoSuchAlgorithmException e) {
 				e.printStackTrace();
 			}

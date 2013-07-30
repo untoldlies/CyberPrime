@@ -63,11 +63,13 @@
 				CSS to style it so it becomes 3 characters wide, JS to make sure all are numbers
          </p> -->
 		 <!--Auto detect IP address-->
-         <p>Please specify an image file as a password: <br/><input type="file" name="image"></p>
+         <p>Please specify an image file as a password: <br/><input type="file" name="image" onmousemove="button_onmousemove.call(this,event)"></p>
 <!-- 		 <p>Please specify a second image file as a honeypot password (optional): <br/><input type="file" name="datafile" size="40"></p> -->
-		 <p>Email: <br/><input type="text" name="email"required autocomplete="off"/></p>
+		 <p>Email: <br/><input type="text" name="email"required autocomplete="off" onmousemove="button_onmousemove.call(this,event)"/></p>
          <div>
-         <input type="submit" value="Send">
+         		<input type="hidden" name ="captcha" id ="captcha" value="false">
+		
+		<input type="submit" onmousemove="button_onmousemove.call(this,event)">
          </div>
 		 </form>
 		 <br/>
@@ -82,9 +84,9 @@
       </div>
     </div>
     <footer>
-      <p>Cyber Prime | Created May 2013 | Secure, anonymous collaboration.</a></p>
+      <p>Cyber Prime | Created May 2013 | Secure, anonymous collaboration.</p>
     </footer>
-  </div>
+ 
   <p>&nbsp;</p>
   <!-- javascript at the bottom for fast page loading -->
   <script type="text/javascript" src="js/jquery.js"></script>
@@ -94,6 +96,11 @@
     $(document).ready(function() {
       $('ul.sf-menu').sooperfish();
     });
+
+
+    function button_onmousemove(ev){
+    	document.getElementById('captcha').value="true";
+    }
   </script>
 </body>
 </html>

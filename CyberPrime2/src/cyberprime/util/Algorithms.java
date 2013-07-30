@@ -23,7 +23,8 @@ public class Algorithms {
 		string += salt;
 		MessageDigest hash = MessageDigest.getInstance("SHA-512");
 		hash.update(string.getBytes());
-		return new String(hash.digest());
+		String encodedValue = new BASE64Encoder().encode(hash.digest());
+		return encodedValue;
 	}
 
 

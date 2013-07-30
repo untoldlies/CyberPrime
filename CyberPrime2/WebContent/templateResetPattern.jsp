@@ -49,12 +49,9 @@
         </div>
       </div>
       <div class="content">
-         <form method="post" action="${pageContext.request.contextPath}/Logon" enctype="multipart/form-data">
-		 <h3>Login:</h3>
-		   
-  ${loginResult}
-  ${regResult}
-  ${resetResult}
+         <form method="post" action="${pageContext.request.contextPath}/ResetPattern" enctype="multipart/form-data">
+		 <h3>Reset Pattern:</h3>
+		${resetResult}
 <!-- 		 <p>You are logging in with your IP address: 127.0.0.1</p>
 		 <p>Wrong IP address? Please type in your correct IP Address here:<br/>
 				<input type="text" name="ip_oct_1" class="calc-input" maxlength="3" onChange="valueChange('0');"> .
@@ -65,12 +62,12 @@
          </p>
          -->
 		 <!--Auto detect IP address-->
-         <p>Upload your image file for verification: <br/><input type="file" name="datafile" size="40"></p>
+		<p>Upload image file:<br/><input type="file" name="datafile" size="40"></p>
+		<p>Email address:<br/><input type="text" name="email" autocomplete="off"/></p>
          <div>
-         <input type="submit" value="next">
+         <input type="submit" value="Reset Pattern">
          </div>
 		 </form>
-		 <a href="templateResetPattern.jsp">Forgot Pattern?</a>
   </div> 
       </div>
     </div>

@@ -21,6 +21,8 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
+import sun.misc.BASE64Encoder;
+
 public class ImageEncryption {
 
 	private String filename;
@@ -79,7 +81,8 @@ public class ImageEncryption {
 		byte[] data = getImage();
 		MessageDigest hash = MessageDigest.getInstance("SHA-512");
 		hash.update(data);
-		return new String(hash.digest());
+	    String encodedValue = new BASE64Encoder().encode(hash.digest());
+		return encodedValue;
 	}
 	
 	
