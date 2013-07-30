@@ -147,6 +147,13 @@ public class FileTransfer extends HttpServlet {
 									out.println("</body>");
 									out.println("</html>");
 									
+									Files files = new Files();
+									files.setFileName(fileName);
+									files.setFilePath(filePath + fileName);
+									files.setLength((int)sizeInBytes);
+									files.setMimeType(mimeType);
+									
+									
 								} catch (Exception ex) {
 									out.print("<p><strong>No file found, please try again.</strong></p>");
 									out.println("</body>");
@@ -179,7 +186,7 @@ public class FileTransfer extends HttpServlet {
 			length = request.getContentLength();
 			if (length > maxFileSize) {
 
-				out.println("<p><strong>Posted content length of " + (length/(1000 * 1000))
+				out.println("<p><strong>Posted content length of " + (length/(1000 * 1000)) + "mb "
 						+ " exceeds limit of " + (maxFileSize/(1000*1000)) + "mb " + " by "
 						+ ((length - maxFileSize)/(1000*1000)) + "mb " + "</strong></p>" + "<br/>");
 				out.println("<p>Please try again.</p>");
@@ -203,6 +210,7 @@ public class FileTransfer extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, java.io.IOException {
 	
+		try{
 		file = new File(filePath + file.getName());
 		int length = 0;
 		ServletOutputStream outStream = response.getOutputStream();
@@ -234,6 +242,11 @@ public class FileTransfer extends HttpServlet {
 		outStream.flush();
 		outStream.close();
 		file.delete();
+		
+		} catch(IOException e){
+			e.printStackTrace();
+			System.out.println(e);
+		}
 		}
 
 }
