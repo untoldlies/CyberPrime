@@ -1,123 +1,190 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<title>Test Web Cam</title>
-<style type="text/css">
-#webcam, #canvas {
-    width: 640px;
-    border:20px solid #333;
-    background:#eee;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    border-radius: 20px;
-}
-
-#webcam {
-    position:relative;
-}
-
-#webcam > span {
-    z-index:2;
-    position:absolute;
-    color:#eee;
-    font-size:10px;
-    bottom: -16px;
-    left:152px;
-}
-
-#canvas {    border:20px solid #ccc;
-    background:#eee;
-}
-</style><script type="text/javascript" src="resources/jquery-1.js"></script>
-<script type="text/javascript" src="resources/jquery.js"></script>
-
-<!-- For telasocial labs -->
-<title>Simple Camera Canvas Manipulation</title>
-<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-<script type="text/javascript" src="camcanvas.js"></script>
-
-</head><body onload="init()">
-
-<button onclick="setFunction(passEmboss)">Emboss</button>
-<button onclick="setFunction(passRed)">Red</button>
-<button onclick="setFunction(passNormal)">Normal</button>
-<button onclick="setFunction(passInverse)">Inversed</button>
-<button onclick="setFunction(passGray)">Grayscale</button>
-<p>
-<video id="v" width="320" height="240"></video>
-<canvas id="c" width="320" height="240"></canvas>
-</p>
-<!-- End of telasocial labs -->
-
-<p id="status" style="height:22px; color:#c00;font-weight:bold;"></p>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<script language="JavaScript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script language="JavaScript" src="//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
+		<script language="JavaScript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+		<script language="JavaScript" src="scriptcam.js"></script>
+		<link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+		<style>
+			#webcam {
+				float:left;
+			}
+			#chatWindow {
+				width:635px;
+				height:75px;
+				overflow-y:scroll;
+				overflow-x:auto;
+				border:1px solid grey;
+				font-size:11px;
+				padding:5px;
+				background-color:white;
+			}
+			#volumeMeter {
+				background-image:url('ledsbg.png');
+				width:19px;
+				height:133px;
+				padding-top:5px;
+			}
+			#volumeMeter img {
+				padding-left:4px;
+				padding-top:1px;
+				display:block;
+			}
+			.ui-slider {
+				background:none;
+				background-image:url('trackslider.png');
+				border:0;height:107px;
+				margin-top:16px;
+			}
+			.ui-slider .ui-slider-handle {
+				width:14px;
+				height:32px;
+				margin-left:7px;
+				margin-bottom:-16px;
+				background:url(volumeslider.png) no-repeat; 
+			}
+			#volumePanel {
+				-moz-border-radius: 0px 5px 5px 0px;
+				border-radius: 0px 5px 5px 0px;
+				background-color:#4B4B4B;
+				width:55px;
+				height:160px;
+				-moz-box-shadow: 0px 3px 3px #333333;
+				-webkit-box-shadow: 0px 3px 3px  #333333;
+				shadow: 0px 3px 3px #333333;
+			}
+			#setupPanel {
+				width:650px;
+				height:30px;
+				margin:5px;
+			}
+		</style>
+		<script>
+			$(document).ready(function() {
+				$("#webcam").scriptcam({ 
+					chatWindow:'chatWindow',
+					onError:onError,
+					promptWillShow:promptWillShow,
+					showMicrophoneErrors:false,
+					onWebcamReady:onWebcamReady,
+					connected:chatStarted,
+					setVolume:setVolume,
+					timeLeft:timeLeft,
+					loginName:'usernamedemo',
+					chatRoom:'demochatroom'
+				});
+				setVolume(0);
+				$("#slider").slider({ animate: true, min: 0, max: 100 , value:50, orientation: 'vertical', disabled:true});
+				$("#slider").bind("slidechange", function(event, ui) {
+					$.scriptcam.changeVolume($("#slider" ).slider("option", "value"));
+				});
+				$("#message").keypress(function(event) {
+					if (event.which == 13) {
+						event.preventDefault();
+						$.scriptcam.sendMessage($('#message').val());
+						$('#message').val('');
+					}
+				});
+			});
+			function closeCamera() {
+				$("#slider").slider("option","disabled", true);
+				$.scriptcam.closeCamera();
+			}
+			function onError(errorId,errorMsg) {
+				alert(errorMsg);
+			}
+			function chatStarted() {
+				$("#slider" ).slider("option", "disabled", false);
+			}
+			function onWebcamReady(cameraNames,camera,microphoneNames,microphone,volume) {
+				$("#slider" ).slider("option", "value", volume);
+				$.each(cameraNames, function(index, text) {
+					$('#cameraNames').append( $('<option></option>').val(index).html(text))
+				}); 
+				$('#cameraNames').val(camera);
+				$.each(microphoneNames, function(index, text) {
+					$('#microphoneNames').append( $('<option></option>').val(index).html(text))
+				}); 
+				$('#microphoneNames').val(microphone);
+			}
+			function promptWillShow() {
+				alert('A security dialog will be shown. Please click on ALLOW and wait for a second chat partner to arrive.');
+			}
+			function setVolume(value) {
+				value=parseInt(32 * value / 100) + 1;
+				for (var i=1; i < value; i++) {
+					$('#LedBar' + i).css('visibility','visible');
+				}
+				for (i=value; i < 33; i++) {
+					$('#LedBar' + i).css('visibility','hidden');
+				}
+			}
+			function timeLeft(value) {
+				$('#timeLeft').html(value);
+			}
+			function changeCamera() {
+				$.scriptcam.changeCamera($('#cameraNames').val());
+			}
+			function changeMicrophone() {
+				$.scriptcam.changeMicrophone($('#microphoneNames').val());
+			}
+		</script>
+</head>
+<body>
 <div id="webcam">
-</div>
-
-<p style="width:360px;text-align:center; ">|
-    <a href="javascript:webcam.capture();changeFilter();void(0);">TEST</a></p>
-
-<script type="text/javascript">
-var pos = 0;
-var ctx = null;
-var cam = null;
-var image = null;
-
-var filter_on = false;
-var filter_id = 0;
-
-$(function() {
-
-        var pos = 0, ctx = null, saveCB, image = [];
-        var canvas = document.createElement("canvas");
-        canvas.setAttribute('width', 320);
-        canvas.setAttribute('height', 240);  
-        if (canvas.toDataURL) {
-                ctx = canvas.getContext("2d");              
-                image = ctx.getImageData(0, 0, 320, 240);
-                saveCB = function(data) {                        
-                        var col = data.split(";");
-                        var img = image;
-                        for(var i = 0; i < 320; i++) {
-                                var tmp = parseInt(col[i]);
-                                img.data[pos + 0] = (tmp >> 16) & 0xff;
-                                img.data[pos + 1] = (tmp >> 8) & 0xff;
-                                img.data[pos + 2] = tmp & 0xff;
-                                img.data[pos + 3] = 0xff;
-                                pos+= 4;
-                        }
-                        if (pos >= 4 * 320 * 240) {
-                                ctx.putImageData(img, 0, 0);
-                                $.post("/servlets/UploadServlet", {type: "data", image: canvas.toDataURL("image/png")});
-                                pos = 0;
-                        }
-                };
-        } else {
-                saveCB = function(data) {
-                        image.push(data);                        
-                        pos+= 4 * 320;                        
-                        if (pos >= 4 * 320 * 240) {
-                                $.post("/servlets/UploadServlet", {type: "pixel", image: image.join('|')});
-                                pos = 0;
-                        }
-                };
-        }
-        $("#webcam").webcam({
-                width: 320,
-                height: 240,
-                mode: "callback", //Same procedure as callback, 
-                //onSave is called non-stop, webcam.save() has no effect
-                swffile: "resources/jscam_canvas_only.swf",
-                onSave: saveCB,
-                onCapture: function () {
-                        webcam.save();
-                },
-                debug: function (type, string) {
-                        console.log(type + ": " + string);
-                },
-                
-                onLoad: function() {}
-                
-        });
-
-});
-</script>
+		</div>
+		<div id="volumePanel" style="float:left;position:relative;top:10px;">
+			<div id="volumeMeter" style="position:absolute;top:10px;left:7px;float:left;">
+				<img id="LedBar32" src="ledred.png">
+				<img id="LedBar31" src="ledred.png">
+				<img id="LedBar30" src="ledred.png">
+				<img id="LedBar29" src="ledred.png">
+				<img id="LedBar28" src="ledred.png">
+				<img id="LedBar27" src="ledred.png">
+				<img id="LedBar26" src="ledred.png">
+				<img id="LedBar25" src="ledred.png">
+				<img id="LedBar24" src="ledred.png">
+				<img id="LedBar23" src="ledred.png">
+				<img id="LedBar22" src="ledred.png">
+				<img id="LedBar21" src="ledred.png">
+				<img id="LedBar20" src="ledgreen.png">
+				<img id="LedBar19" src="ledgreen.png">
+				<img id="LedBar18" src="ledgreen.png">
+				<img id="LedBar17" src="ledgreen.png">
+				<img id="LedBar16" src="ledgreen.png">
+				<img id="LedBar15" src="ledgreen.png">
+				<img id="LedBar14" src="ledgreen.png">
+				<img id="LedBar13" src="ledgreen.png">
+				<img id="LedBar12" src="ledgreen.png">
+				<img id="LedBar11" src="ledgreen.png">
+				<img id="LedBar10" src="ledgreen.png">
+				<img id="LedBar9" src="ledgreen.png">
+				<img id="LedBar8" src="ledgreen.png">
+				<img id="LedBar7" src="ledgreen.png">
+				<img id="LedBar6" src="ledgreen.png">
+				<img id="LedBar5" src="ledgreen.png">
+				<img id="LedBar4" src="ledgreen.png">
+				<img id="LedBar3" src="ledgreen.png">
+				<img id="LedBar2" src="ledgreen.png">
+				<img id="LedBar1" src="ledgreen.png">
+			</div>
+			<div id="slider" style="position:absolute;top:10px;left:30px;">
+			</div>
+		</div>
+		<br clear="both"/>
+		<div id="setupPanel">
+			<img src="webcamlogo.png" style="vertical-align:text-top"/>
+			<select id="cameraNames" size="1" onChange="changeCamera()" style="width:145px;font-size:10px;height:25px;">
+			</select>
+			<img src="miclogo.png" style="vertical-align:text-top"/>
+			<select id="microphoneNames" size="1" onChange="changeMicrophone()" style="width:128px;font-size:10px;height:25px;">
+			</select>
+		</div>
+		<div id="chatWindow"></div>
+		<input type="text" id="message" style="width:635px;">
 </body>
 </html>
