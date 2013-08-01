@@ -15,77 +15,76 @@ public class FileEncryption {
 
 	Files files = new Files();
 	String filePath = files.getFilePath();
+	private File file;
+	private String algorithm;
 
-	File myFileSource = new File(filePath);
-	File myRenamedFile = new File(filePath + " encrypted");
-	File myFileDestination = new File(myRenamedFile + "encryption\\");
-	InputStream inStream = null;
-	OutputStream outStream = null;
-
-	public String fileEncryption() throws IOException, InterruptedException{
-		String file = "";
-		try {
-				
-			file = FileUtils.readFileToString(myFileSource);
-			
-			// logic check
-			System.out.println(myFileSource);
-			
-			if(!myFileSource.exists()){
-				
-				System.out.println("File does not exist.");
-		           //just exit
-		           System.exit(0);
-			}
-			
-			else {
-				try{
-					
-					
-					
-					if(myFileSource.renameTo(myRenamedFile)){
-						
-						System.out.println("moving successful");
-						myFileSource.delete();
-						
-					} else {
-						
-						System.out.println("moving unsuccessful");
-						
-					}
-		            
-		           }catch(Exception e){
-		           
-		        	   e.printStackTrace();
-		            //error, just exit
-		                System.exit(0);
-		           }
-			}
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return file;
+	public FileEncryption(String algorithm, String path){
+		this.algorithm = algorithm;
+		this.file = new File(files.getFilePath());
 	}
 	
-	public String fileDecryption() throws IOException, InterruptedException{
+	public void encrypt() throws Exception{
+		//opening streams
+		FileInputStream inputStream = new FileInputStream(file);
+		file = new File(file.getAbsolutePath()+".enc");
+		FileOutputStream outStream = new FileOutputStream(file);
 		
-		try{
-			StringBuilder appendable = new StringBuilder();
-			Reader reader = new FileReader(filePath);
-			reader.read(appendable);
-			reader.close();
-
-			String readString = appendable.toString();
-			
-		} catch(IOException ex){
-			ex.printStackTrace();
+		//generating keys
+		byte k[] = "HignDIPs".getBytes();
+		SecretKeySpec key = new SecretKeySpec(k,algorithm.split("/")[0]);
+		
+		//creating and initializing cipher and cipher streams
+		Cipher encrypt = Cipher.getInstance(algorithm);
+		encrypt.init(Cipher.ENCRYPT_MODE, key);
+		CipherOutputStream c = new CipherOutputStream(outStream, encrypt);
+		
+		byte[] buf = new byte[1024];
+		
+		int read;
+		while((read = inputStream.read(buf)) != -1){ //reading data
+			c.write(buf, 0 , read); //writing encrypted data
 		}
 		
-		return null;
-		
+		//closing streams
+		inputStream.close();
+		c.flush();
+		c.close();
 	}
+	
+	public void decrypt() throws Exception { 
+		//opening Stream
+		FileInputStream fis = new FileInputStream(file);
+		file = new File(file.getAbsolutePath()+".dec");
+		FileOutputStream fos = new FileOutputStream(file);
+		
+		//generating keys
+		byte k[] = "HignDIPs".getBytes();
+		SecretKeySpec key = new SecretKeySpec(k, algorithm.split("/")[0]);
+		
+		//creating and initializing cipher and cipher streams
+		Cipher decrypt = Cipher.getInstance(algorithm);
+		decrypt.init(Cipher.DECRYPT_MODE, key);
+		CipherInputStream cin = new CipherInputStream(fis, decrypt);
+		
+		byte[] buf = new byte[1024];
+		int read = 0;
+		while ((read = cin.read(buf)) != -1){
+			fos.write(buf, 0 , read);
+			
+			//close streams
+			cin.close();
+			fos.flush();
+			fos.close();
+			
+		}
+
+	}
+	
+	
+	public static void main (String[] args) throws Exception{
+		new FileEncryptor("DES/ECB/PKCS5Padding",file).encrypt;
+	}
+	
 	
 	/*
 	 * private String filename;

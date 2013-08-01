@@ -170,11 +170,13 @@ public class FileTransfer extends HttpServlet {
 									return;
 								}
 
-								else {
+								/*else {
+									if (Id.getClientId()){
 									out.println("<p><strong>Please put a a valid ID.</strong></p>");
 									out.println("</body>");
 									out.println("</html>");
-								}
+									}
+								}*/
 							}
 						}
 					}
