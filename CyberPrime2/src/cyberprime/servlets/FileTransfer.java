@@ -107,6 +107,14 @@ public class FileTransfer extends HttpServlet {
 
 						if (fieldName.equalsIgnoreCase("Id"))
 							Id = item.getString();
+						
+						
+						if (Id.isEmpty()) {
+							out.println("<p><strong>Please enter a username.</strong></p>");
+							out.println("</body>");
+							out.println("</html>");
+							return;
+						}
 					}
 
 					else {
@@ -163,20 +171,10 @@ public class FileTransfer extends HttpServlet {
 
 							else {
 
-								if (Id.isEmpty()) {
-									out.println("<p><strong>Please enter a username.</strong></p>");
-									out.println("</body>");
-									out.println("</html>");
-									return;
-								}
+								out.println("<p><strong>Please put a a valid ID.</strong></p>");
+								out.println("</body>");
+								out.println("</html>");
 
-								/*else {
-									if (Id.getClientId()){
-									out.println("<p><strong>Please put a a valid ID.</strong></p>");
-									out.println("</body>");
-									out.println("</html>");
-									}
-								}*/
 							}
 						}
 					}
